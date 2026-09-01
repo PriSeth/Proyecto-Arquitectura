@@ -227,6 +227,39 @@ iframe {
   padding-bottom: 54px;
 }
 
+.wrap-register100 {
+  padding: 80px 110px 40px 95px;
+  justify-content: center;
+}
+
+.register100-form {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.register100-form-title {
+  padding-bottom: 30px;
+}
+
+.register-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px 20px;
+}
+
+.register-form-grid .wrap-input100 {
+  margin-bottom: 0;
+}
+
+.register100-form .container-login100-form-btn {
+  padding-top: 30px;
+}
+
+.register100-form .login100-form-btn {
+  max-width: 260px;
+}
+
 
 /*---------------------------------------------*/
 .wrap-input100 {
@@ -371,6 +404,10 @@ iframe {
     padding: 177px 90px 33px 85px;
   }
 
+  .wrap-register100 {
+    padding: 80px 70px 40px 70px;
+  }
+
   .login100-pic {
     width: 35%;
   }
@@ -385,6 +422,14 @@ iframe {
     padding: 100px 80px 33px 80px;
   }
 
+  .wrap-register100 {
+    padding: 80px 40px 35px 40px;
+  }
+
+  .register-form-grid {
+    grid-template-columns: 1fr;
+  }
+
   .login100-pic {
     display: none;
   }
@@ -397,6 +442,10 @@ iframe {
 @media (max-width: 576px) {
   .wrap-login100 {
     padding: 100px 15px 33px 15px;
+  }
+
+  .wrap-register100 {
+    padding: 60px 15px 30px 15px;
   }
 }
 
