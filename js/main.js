@@ -5,7 +5,7 @@
     
     /*==================================================================
     [ Validate ]*/
-    var input = $('.validate-input .input100');
+    /* var input = $('.validate-input .input100');
 
     $('.validate-form').on('submit',function(){
         var check = true;
@@ -50,8 +50,66 @@
         var thisAlert = $(input).parent();
 
         $(thisAlert).removeClass('alert-validate');
-    }
-    
-    
+    }*/
 
+        /*Se ejecuta luego del captcha*/
+    window.onCaptchaSuccess = function (token) {
+        console.log("CAPTCHA resuelto, verificando en servidor...");
+
+        fetch("php/captcha.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "captcha=" + encodeURIComponent(token)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                habilitarCorreo();
+            } else {
+                alert("El CAPTCHA no es válido.");
+                grecaptcha.reset();
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("No se pudo verificar el CAPTCHA.");
+        });
+    };
+
+    /*Si el Captch vence se bloquea todo otra vez*/
+    window.onCaptchaExpired = function () {
+        const correo = document.getElementById("inputCorreo");
+        const contrasena = document.getElementById("inputContrasena");
+        correo.disabled = true;
+        contrasena.disabled = true;
+        contrasena.value = "";
+    };
+
+    function habilitarCorreo() {
+        const correo = document.getElementById("inputCorreo");
+        correo.disabled = false;
+        correo.focus();
+    }
+
+    function habilitarContrasena() {
+        const contrasena = document.getElementById("inputContrasena");
+        contrasena.disabled = false;
+        contrasena.focus();
+    }
+
+    /* Al presionar Enter en el correo, se habilita contraseña*/
+    document.getElementById("inputCorreo").addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault(); /*Evita mandar el form antes de tiempo */
+            if (this.value.trim() !== "") {
+                habilitarContrasena();
+            } else {
+                showValidate(this);
+            }
+        }
+    });
+    
+    
 })(jQuery);

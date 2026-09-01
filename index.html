@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </head>
 <body>
@@ -29,7 +30,8 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Correo válido es requerido: ejemplo@abc.xyz">
-						<input class="input100" type="text" name="correo" placeholder="Correo">
+						<input class="input100" type="text" name="correo" id="inputCorreo" placeholder="Correo"
+						disabled>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -37,15 +39,23 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Contraseña es requerida">
-						<input class="input100" type="password" name="contraseña" placeholder="Contraseña">
+						<input class="input100" type="password" name="contraseña" id="inputContrasena" placeholder="Contraseña"
+						disabled>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
 					
+					<!--Captcha-->
+					<div class="text-center p-t-20 p-b-20">
+						<div class="g-recaptcha" data-sitekey="6Ld3RaMtAAAAADLZz-tkFy3PLluQ2Q9ANcOoCiR1"
+							data-callback="onCaptchaSuccess" data-expired-callback="onCaptchaExpired">
+						</div>
+					</div>
+
 					<div class="container-login100-form-btn">
-						<button type="submit" class="login100-form-btn">
+						<button id="btnLogin" class="login100-form-btn" type="button">
 							Iniciar Sesión
 						</button>
 					</div>
