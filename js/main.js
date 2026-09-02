@@ -2,55 +2,97 @@
 (function ($) {
     "use strict";
 
-    
-    /*==================================================================
-    [ Validate ]*/
-    /* var input = $('.validate-input .input100');
+    const usuario = document.getElementById("inputUsuario");
+    const contrasena = document.getElementById("inputContrasena");
+    const botonLogin = document.getElementById("btnLogin");
+    const contadorIntentos = document.getElementById("contadorIntentos");
 
-    $('.validate-form').on('submit',function(){
-        var check = true;
+    const credencialesValidas = {
+        usuario: "admin",
+        contrasena: "1234"
+    };
 
-        for(var i=0; i<input.length; i++) {
-            if(validate(input[i]) == false){
-                showValidate(input[i]);
-                check=false;
+    if (!usuario || !contrasena || !botonLogin) {
+        return;
+    }
+
+    let intentosFallidos = 0;
+    let bloqueoActivo = false;
+    const duracionBloqueo = 60;
+
+    function actualizarContador() {
+        contadorIntentos.textContent = "Intentos: " + intentosFallidos + " de 3";
+    }
+
+    function limpiarCredenciales() {
+        usuario.value = "";
+        contrasena.value = "";
+        contrasena.disabled = true;
+    }
+
+    function actualizarEstadoBloqueo(segundosRestantes) {
+        botonLogin.textContent = "Bloqueado (" + segundosRestantes + " s)";
+    }
+
+    function bloquearLogin() {
+        bloqueoActivo = true;
+        usuario.disabled = true;
+        contrasena.disabled = true;
+        botonLogin.disabled = true;
+
+        let segundosRestantes = duracionBloqueo;
+        actualizarEstadoBloqueo(segundosRestantes);
+
+        const temporizador = setInterval(function () {
+            segundosRestantes -= 1;
+            actualizarEstadoBloqueo(segundosRestantes);
+
+            if (segundosRestantes <= 0) {
+                clearInterval(temporizador);
+                bloqueoActivo = false;
+                intentosFallidos = 0;
+                actualizarContador();
+                usuario.disabled = false;
+                contrasena.disabled = true;
+                botonLogin.disabled = false;
+                botonLogin.textContent = "Iniciar Sesión";
+                usuario.focus();
             }
+        }, 1000);
+    }
+
+    function procesarLogin() {
+        if (bloqueoActivo) {
+            return;
         }
 
-        return check;
-    });
+        const usuarioIngresado = usuario.value.trim();
+        const contrasenaIngresada = contrasena.value;
+        const credencialesCorrectas = usuarioIngresado === credencialesValidas.usuario
+            && contrasenaIngresada === credencialesValidas.contrasena;
 
-
-    $('.validate-form .input100').each(function(){
-        $(this).focus(function(){
-           hideValidate(this);
-        });
-    });
-
-    function validate (input) {
-        if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-                return false;
-            }
+        if (credencialesCorrectas) {
+            alert("Inicio de sesión exitoso.");
+            intentosFallidos = 0;
+            actualizarContador();
+            return;
         }
-        else {
-            if($(input).val().trim() == ''){
-                return false;
-            }
+
+        intentosFallidos += 1;
+        actualizarContador();
+        limpiarCredenciales();
+
+        if (intentosFallidos >= 3) {
+            alert("Has alcanzado el límite de intentos. Intente nuevamente en 1 minuto.");
+            bloquearLogin();
+        } else {
+            alert("Usuario o contraseña incorrectos. Intento " + intentosFallidos + " de 3.");
+            usuario.disabled = false;
+            usuario.focus();
         }
     }
 
-    function showValidate(input) {
-        var thisAlert = $(input).parent();
-
-        $(thisAlert).addClass('alert-validate');
-    }
-
-    function hideValidate(input) {
-        var thisAlert = $(input).parent();
-
-        $(thisAlert).removeClass('alert-validate');
-    }*/
+    botonLogin.addEventListener("click", procesarLogin);
 
         /*Se ejecuta luego del captcha*/
     window.onCaptchaSuccess = function (token) {
@@ -66,7 +108,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                habilitarCorreo();
+                habilitarUsuario();
             } else {
                 alert("El CAPTCHA no es válido.");
                 grecaptcha.reset();
@@ -80,17 +122,14 @@
 
     /*Si el Captch vence se bloquea todo otra vez*/
     window.onCaptchaExpired = function () {
-        const correo = document.getElementById("inputCorreo");
-        const contrasena = document.getElementById("inputContrasena");
-        correo.disabled = true;
+        usuario.disabled = true;
         contrasena.disabled = true;
         contrasena.value = "";
     };
 
-    function habilitarCorreo() {
-        const correo = document.getElementById("inputCorreo");
-        correo.disabled = false;
-        correo.focus();
+    function habilitarUsuario() {
+        usuario.disabled = false;
+        usuario.focus();
     }
 
     function habilitarContrasena() {
@@ -100,14 +139,21 @@
     }
 
     /* Al presionar Enter en el correo, se habilita contraseña*/
-    document.getElementById("inputCorreo").addEventListener("keydown", function (e) {
+    usuario.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
             e.preventDefault(); /*Evita mandar el form antes de tiempo */
             if (this.value.trim() !== "") {
                 habilitarContrasena();
             } else {
-                showValidate(this);
+                alert("El usuario es requerido.");
             }
+        }
+    });
+
+    contrasena.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            procesarLogin();
         }
     });
     

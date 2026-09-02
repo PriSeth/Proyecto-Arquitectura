@@ -39,6 +39,22 @@ body, html {
 	font-family: Poppins-Regular, sans-serif;
 }
 
+.project-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  padding: 8px 15px;
+  background: #fff;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.18);
+  color: #000;
+  font-family: Poppins-Regular, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+
 /*---------------------------------------------*/
 a {
 	font-family: Poppins-Regular;
@@ -168,6 +184,7 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
+  padding-bottom: 55px;
   background: #9053c7;
   background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
   background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
@@ -256,8 +273,17 @@ iframe {
   padding-top: 30px;
 }
 
+.register-form-actions {
+  gap: 15px;
+}
+
 .register100-form .login100-form-btn {
   max-width: 260px;
+  flex: 1;
+}
+
+.register-secondary-btn {
+  background: #666666;
 }
 
 
@@ -341,6 +367,15 @@ iframe {
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
   transition: all 0.4s;
+}
+
+.login-attempts {
+  margin-top: -2px;
+  color: #999999;
+  font-family: Poppins-Regular, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .input100:focus + .focus-input100 + .symbol-input100 {
@@ -447,6 +482,14 @@ iframe {
   .wrap-register100 {
     padding: 60px 15px 30px 15px;
   }
+
+  .register-form-actions {
+    flex-direction: column;
+  }
+
+  .register100-form .login100-form-btn {
+    max-width: none;
+  }
 }
 
 
@@ -489,29 +532,37 @@ iframe {
   transition: opacity 0.4s;
 }
 
-.alert-validate::after {
-  content: "\f06a";
-  font-family: FontAwesome;
-  display: block;
+.validation-icon {
+  display: none;
   position: absolute;
   color: #c80000;
+  font-family: FontAwesome;
   font-size: 15px;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  transform: translateY(-50%);
   right: 13px;
+  transform: translateY(-50%);
+  cursor: help;
 }
 
-.alert-validate:hover:before {
+.alert-validate::after {
+  display: none;
+}
+
+.alert-validate .validation-icon {
+  display: block;
+}
+
+.alert-validate::before {
+  z-index: 2;
+}
+
+.alert-validate:has(.validation-icon:hover)::before {
   visibility: visible;
   opacity: 1;
 }
 
 @media (max-width: 992px) {
-  .alert-validate::before {
+  .alert-validate:has(.validation-icon:hover)::before {
     visibility: visible;
     opacity: 1;
   }

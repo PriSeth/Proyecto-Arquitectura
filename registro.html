@@ -17,70 +17,83 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 wrap-register100">
-				<form class="login100-form register100-form validate-form">
+				<form id="registroForm" class="login100-form register100-form validate-form" novalidate>
 					<span class="login100-form-title register100-form-title">
 						Registra tu cuenta
 					</span>
 
 					<div class="register-form-grid">
-						<div class="wrap-input100 validate-input" data-validate = "Nombre completo es requerido">
-							<input class="input100" type="text" name="nombre" placeholder="Nombre completo">
+						<div class="wrap-input100 validate-input" data-validate = "Nombre completo obligatorio">
+							<input class="input100" type="text" name="nombre" placeholder="Nombre completo" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-user" aria-hidden="true"></i>
 							</span>
+							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "RUT es requerido">
-							<input class="input100" type="text" name="rut" placeholder="RUT">
+						<div class="wrap-input100 validate-input" data-validate = "RUT obligatorio">
+							<input class="input100" type="text" name="rut" placeholder="RUT" required pattern="[0-9]{7,8}-[0-9Kk]">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-id-card" aria-hidden="true"></i>
 							</span>
+							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "Correo válido es requerido: ejemplo@abc.xyz">
-							<input class="input100" type="email" name="correo" placeholder="Correo">
+						<div class="wrap-input100 validate-input" data-validate = "Correo obligatorio: ejemplo@abc.xyz">
+							<input class="input100" type="email" name="correo" placeholder="Correo" required>
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-envelope" aria-hidden="true"></i>
 							</span>
+							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "Usuario es requerido">
-							<input class="input100" type="text" name="usuario" placeholder="Usuario">
+						<div class="wrap-input100 validate-input" data-validate = "Usuario obligatorio">
+							<input class="input100" type="text" name="usuario" placeholder="Usuario" required minlength="3">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-user-circle" aria-hidden="true"></i>
 							</span>
+							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "Contraseña es requerida">
-							<input class="input100" type="password" name="contraseña" placeholder="Contraseña">
+						<div class="wrap-input100 validate-input" data-validate = "Contraseña obligatoria">
+							<input class="input100" type="password" name="contraseña" placeholder="Contraseña" required minlength="4">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-lock" aria-hidden="true"></i>
 							</span>
+							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "Teléfono es requerido">
-							<input class="input100" type="tel" name="telefono" placeholder="Telefono">
+						<div class="wrap-input100 validate-input" data-validate = "Teléfono obligatorio">
+							<input class="input100" type="tel" name="telefono" placeholder="Telefono" required pattern="[0-9]{8,15}" inputmode="numeric">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-phone" aria-hidden="true"></i>
 							</span>
+							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 					</div>
 
-					<div class="container-login100-form-btn">
+					<div class="container-login100-form-btn register-form-actions">
 						<button type="submit" class="login100-form-btn">
 							Registrar
+						</button>
+						<button id="btnOtroRegistro" type="button" class="login100-form-btn register-secondary-btn">
+							Otro registro
 						</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<footer class="project-footer">
+		Proyecto elaborado por: Luis Garcia, Mia Martinez y Diego Vargas
+	</footer>
 
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="vendor/bootstrap/js/popper.js"></script>
@@ -91,6 +104,39 @@
 		$('.js-tilt').tilt({
 			scale: 1.1
 		})
+
+		document.getElementById('btnOtroRegistro').addEventListener('click', function () {
+			document.getElementById('registroForm').reset();
+			document.querySelectorAll('#registroForm .alert-validate').forEach(function (campo) {
+				campo.classList.remove('alert-validate');
+			});
+			document.querySelector('#registroForm input').focus();
+		});
+
+		document.querySelector('input[name="telefono"]').addEventListener('input', function () {
+			this.value = this.value.replace(/[^0-9]/g, '');
+		});
+
+		document.getElementById('registroForm').addEventListener('submit', function (event) {
+			event.preventDefault();
+			const campos = this.querySelectorAll('input');
+			let formularioValido = true;
+
+			campos.forEach(function (campo) {
+				const contenedor = campo.closest('.validate-input');
+				const campoValido = campo.checkValidity();
+				contenedor.classList.toggle('alert-validate', !campoValido);
+
+				if (!campoValido && formularioValido) {
+					formularioValido = false;
+					campo.focus();
+				}
+			});
+
+			if (formularioValido) {
+				alert('En construcción');
+			}
+		});
 	</script>
 	<script src="js/main.js"></script>
 </body>
