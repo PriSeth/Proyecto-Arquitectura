@@ -82,6 +82,11 @@
         actualizarContador();
         limpiarCredenciales();
 
+        /* Recargar Captcha*/
+        if (typeof grecaptcha !== "underfined"){
+            grecaptcha.reset();
+        }
+
         if (intentosFallidos >= 3) {
             alert("Has alcanzado el límite de intentos. Intente nuevamente en 1 minuto.");
             bloquearLogin();
@@ -95,30 +100,30 @@
     botonLogin.addEventListener("click", procesarLogin);
 
         /*Se ejecuta luego del captcha*/
-    window.onCaptchaSuccess = function (token) {
-        console.log("CAPTCHA resuelto, verificando en servidor...");
-
-        fetch("php/captcha.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: "captcha=" + encodeURIComponent(token)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                habilitarUsuario();
-            } else {
-                alert("El CAPTCHA no es válido.");
-                grecaptcha.reset();
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("No se pudo verificar el CAPTCHA.");
-        });
+        window.onCaptchaExpired = function () {
+        usuario.disabled = true;
+        contrasena.disabled = true;
+        botonLogin.disabled = true;
+        contrasena.value = "";
     };
+
+    function habilitarUsuario() {
+        usuario.disabled = false;
+        usuario.focus();
+    }
+
+    function habilitarContrasena() {
+        const contrasena = document.getElementById("inputContrasena");
+        contrasena.disabled = false;
+        contrasena.focus();
+    }
+    function habilitarbotonLogin() {
+    if (contrasena.value.trim() !== "") {
+        botonLogin.disabled = false;
+    } else {
+        botonLogin.disabled = true;
+    }
+}
 
     /*Si el Captch vence se bloquea todo otra vez*/
     window.onCaptchaExpired = function () {
