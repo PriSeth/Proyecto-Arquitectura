@@ -31,6 +31,7 @@
 								<i class="fa fa-user" aria-hidden="true"></i>
 							</span>
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
 						</div>
 
 						<div class="wrap-input100 validate-input" data-validate="RUT obligatorio">
@@ -41,6 +42,7 @@
 								<i class="fa fa-id-card" aria-hidden="true"></i>
 							</span>
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
 						</div>
 
 						<div class="wrap-input100 validate-input" data-validate = "Correo obligatorio: ejemplo@abc.xyz">
@@ -50,6 +52,7 @@
 								<i class="fa fa-envelope" aria-hidden="true"></i>
 							</span>
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
 						</div>
 
 						<div class="wrap-input100 validate-input" data-validate="Usuario obligatorio">
@@ -60,6 +63,7 @@
 								<i class="fa fa-user-circle" aria-hidden="true"></i>
 							</span>
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
 						</div>
 
 						<div class="wrap-input100 validate-input" data-validate="Contraseña obligatoria">
@@ -70,6 +74,7 @@
 								<i class="fa fa-lock" aria-hidden="true"></i>
 							</span>
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
 						</div>
 
 						<div class="wrap-input100 validate-input" data-validate="Teléfono obligatorio">
@@ -80,6 +85,7 @@
 								<i class="fa fa-phone" aria-hidden="true"></i>
 							</span>
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
 						</div>
 					</div>
 
@@ -114,7 +120,73 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="vendor/select2/select2.min.js"></script>
 	<script src="vendor/tilt/tilt.jquery.min.js"></script>
-	<script src="js/registro.js"></script>
+	<script>
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+
+		document.getElementById('btnOtroRegistro').addEventListener('click', function () {
+			document.getElementById('registroForm').reset();
+			document.querySelectorAll('#registroForm .wrap-input100').forEach(function (contenedor) {
+				contenedor.classList.remove('alert-validate');
+				contenedor.classList.remove('confirm-validate');
+			});
+			document.querySelector('#registroForm input').focus();
+		});
+
+		document.querySelector('input[name="telefono"]').addEventListener('input', function () {
+			this.value = this.value.replace(/[^0-9]/g, '');
+		});
+
+		// ---------------------------------------------------------------
+		// Validación en tiempo real: muestra el ticket verde (✔) cuando
+		// el campo es válido, o el ícono rojo (⚠) cuando no lo es.
+		// ---------------------------------------------------------------
+		function validarCampo(campo) {
+			const contenedor = campo.closest('.wrap-input100');
+			const campoValido = campo.checkValidity();
+
+			contenedor.classList.toggle('confirm-validate', campoValido);
+			contenedor.classList.toggle('alert-validate', !campoValido);
+
+			return campoValido;
+		}
+
+		const camposRegistro = document.querySelectorAll('#registroForm input');
+
+		camposRegistro.forEach(function (campo) {
+			// Mientras el usuario escribe
+			campo.addEventListener('input', function () {
+				validarCampo(campo);
+			});
+
+			// Al salir del campo (blur), por si estaba vacío y no disparó "input"
+			campo.addEventListener('blur', function () {
+				validarCampo(campo);
+			});
+		});
+
+		document.getElementById('registroForm').addEventListener('submit', function (event) {
+			event.preventDefault();
+			let formularioValido = true;
+			let primerCampoInvalido = null;
+
+			camposRegistro.forEach(function (campo) {
+				const valido = validarCampo(campo);
+				if (!valido && formularioValido) {
+					formularioValido = false;
+					primerCampoInvalido = campo;
+				}
+			});
+
+			if (!formularioValido) {
+				primerCampoInvalido.focus();
+				return;
+			}
+
+			alert('En construcción');
+		});
+	</script>
 	<script src="js/main.js"></script>
 </body>
 </html>

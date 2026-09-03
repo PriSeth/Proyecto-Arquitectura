@@ -1127,4 +1127,62 @@ table.table-reservas tbody td {
     align-items: stretch;
   }
 }
+/* Contenedor del ícono de éxito: mismo lugar que el ícono de error */
+		.validation-icon-success,
+		.validation-icon {
+			font-family: "FontAwesome" !important;
+		}
 
+		.validation-icon-success {
+			display: none;
+			position: absolute;
+			right: 20px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #57b846;
+			font-size: 18px;
+			pointer-events: none;
+		}
+
+		.wrap-input100 {
+			position: relative;
+		}
+
+		/* Se muestra el check verde solo cuando el campo fue validado como correcto */
+		.wrap-input100.confirm-validate .validation-icon-success {
+			display: inline-block;
+		}
+
+		/* Al mostrar el check, ocultamos el ícono de error por si quedó visible */
+		.wrap-input100.confirm-validate .validation-icon {
+			display: none;
+		}
+
+		/* El ícono de error solo se muestra cuando el campo está marcado inválido */
+		.wrap-input100 .validation-icon {
+			display: none;
+			position: absolute;
+			right: 20px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #e0554f;
+			font-size: 18px;
+			pointer-events: none;
+		}
+
+		.wrap-input100.alert-validate .validation-icon {
+			display: inline-block;
+		}
+
+		.wrap-input100.alert-validate .validation-icon-success {
+			display: none;
+		}
+
+		.wrap-input100.alert-validate input {
+			border-bottom: 2px solid #e0554f;
+		}
+
+		.wrap-input100.confirm-validate input {
+			border-bottom: 2px solid #57b846;
+		}
+	
