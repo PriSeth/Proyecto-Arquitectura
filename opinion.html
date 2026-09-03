@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Inicio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/util.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/boxanimation.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="site-brand" href="inicio.html" aria-label="Ir al inicio">
+      <i class="fa fa-diamond" aria-hidden="true"></i>
+      <span>Mi gimnasio</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a href="inicio.html">Inicio</a>
+      <a href="admin-reservas.html">Reservar</a>
+      <a href="#buscar">Buscar</a>
+    </nav>
+		<div class="site-user">
+			<button type="button" class="site-user-toggle" id="userMenuToggle" aria-expanded="false" aria-controls="userMenu">
+				<i class="fa fa-user-circle" aria-hidden="true"></i>
+				<span>admin</span>
+				<i class="fa fa-chevron-down" aria-hidden="true"></i>
+			</button>
+			<div class="user-menu" id="userMenu" hidden>
+				<a href="index.html"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión</a>
+			</div>
+		</div>
+	</header>
+
+  <div class="feedback-wrap">
+    <div class="feedback-box">
+      <div class="feedback-form-container">
+        <form action="https://api.formpaste.com/submit" method="POST" class="feedback-form-content">
+          <h2>Déjanos tu opinión</h2>
+
+          <label class="feedback-label">Nombre
+            <input type="text" name="name" class="feedback-input" placeholder="Tu nombre" />
+          </label>
+
+          <label class="feedback-label">Correo electrónico
+            <input type="email" name="email" class="feedback-input" placeholder="tu@ejemplo.com" />
+          </label>
+
+          <label class="feedback-label">Calificación
+            <select name="rating" required class="feedback-input">
+              <option>5 - Excelente</option>
+              <option>4 - Bueno</option>
+              <option>3 - Aceptable</option>
+              <option>2 - Malo</option>
+              <option>1 - Muy malo</option>
+            </select>
+          </label>
+
+          <label class="feedback-label">Tu comentario
+            <textarea name="message" required class="feedback-input feedback-textarea"></textarea>
+          </label>
+
+          <button type="submit" class="feedback-btn">Enviar comentario</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+	<footer class="project-footer">
+		<span>Proyecto elaborado por: Luis Garcia, Mia Martinez, Diego Vargas</span>
+	</footer>
+
+	<script src="js/site-header.js"></script>
+	<script src="js/inicio.js"></script>
+</body>
+</html>

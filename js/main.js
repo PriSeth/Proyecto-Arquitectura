@@ -1,4 +1,3 @@
-
 (function ($) {
     "use strict";
 
@@ -83,8 +82,8 @@
         actualizarContador();
         limpiarCredenciales();
 
-        /* Recargar Captcha*/
-        if (typeof grecaptcha !== "underfined"){
+        /* Recargar Captcha */
+        if (typeof grecaptcha !== "undefined") {
             grecaptcha.reset();
         }
 
@@ -100,54 +99,37 @@
 
     botonLogin.addEventListener("click", procesarLogin);
 
-        /*Se ejecuta luego del captcha*/
-        window.onCaptchaExpired = function () {
-        usuario.disabled = true;
-        contrasena.disabled = true;
-        botonLogin.disabled = true;
-        contrasena.value = "";
-    };
-
     function habilitarUsuario() {
         usuario.disabled = false;
         usuario.focus();
     }
 
     function habilitarContrasena() {
-        const contrasena = document.getElementById("inputContrasena");
         contrasena.disabled = false;
         contrasena.focus();
     }
-    function habilitarbotonLogin() {
-    if (contrasena.value.trim() !== "") {
-        botonLogin.disabled = false;
-    } else {
-        botonLogin.disabled = true;
-    }
-}
 
-    /*Si el Captch vence se bloquea todo otra vez*/
+    function habilitarBotonLogin() {
+        botonLogin.disabled = contrasena.value.trim() === "";
+    }
+
+    /* Se ejecuta cuando el captcha se resuelve */
+    window.onCaptchaSuccess = function () {
+        habilitarUsuario();
+    };
+
+    /* Si el captcha vence se bloquea todo otra vez */
     window.onCaptchaExpired = function () {
         usuario.disabled = true;
         contrasena.disabled = true;
+        botonLogin.disabled = true;
         contrasena.value = "";
     };
 
-    function habilitarUsuario() {
-        usuario.disabled = false;
-        usuario.focus();
-    }
-
-    function habilitarContrasena() {
-        const contrasena = document.getElementById("inputContrasena");
-        contrasena.disabled = false;
-        contrasena.focus();
-    }
-
-    /* Al presionar Enter en el correo, se habilita contraseña*/
+    /* Al presionar Enter en el usuario, se habilita contraseña */
     usuario.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
-            e.preventDefault(); /*Evita mandar el form antes de tiempo */
+            e.preventDefault();
             if (this.value.trim() !== "") {
                 habilitarContrasena();
             } else {
@@ -156,12 +138,13 @@
         }
     });
 
+    contrasena.addEventListener("input", habilitarBotonLogin);
+
     contrasena.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
             e.preventDefault();
             procesarLogin();
         }
     });
-    
-    
+
 })(jQuery);

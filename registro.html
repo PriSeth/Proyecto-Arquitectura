@@ -23,8 +23,9 @@
 					</span>
 
 					<div class="register-form-grid">
-						<div class="wrap-input100 validate-input" data-validate = "Nombre completo obligatorio">
-							<input class="input100" type="text" name="nombre" placeholder="Nombre completo" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}">
+						<div class="wrap-input100 validate-input" data-validate="Nombre completo obligatorio">
+							<input class="input100" type="text" name="nombre" id="name" placeholder="Nombre completo"
+								required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-user" aria-hidden="true"></i>
@@ -32,8 +33,9 @@
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "RUT obligatorio">
-							<input class="input100" type="text" name="rut" placeholder="RUT" required pattern="[0-9]{7,8}-[0-9Kk]">
+						<div class="wrap-input100 validate-input" data-validate="RUT obligatorio">
+							<input class="input100" type="text" name="rut" id="rut" placeholder="RUT" required
+								pattern="^\d{1,2}\.\d{3}\.\d{3}-[0-9Kk]$" maxlength="12" autocomplete="off" inputmode="numeric">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-id-card" aria-hidden="true"></i>
@@ -50,8 +52,9 @@
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "Usuario obligatorio">
-							<input class="input100" type="text" name="usuario" placeholder="Usuario" required minlength="3">
+						<div class="wrap-input100 validate-input" data-validate="Usuario obligatorio">
+							<input class="input100" type="text" name="usuario" placeholder="Usuario" required
+								minlength="3" maxlength="10">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-user-circle" aria-hidden="true"></i>
@@ -59,8 +62,9 @@
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "Contraseña obligatoria">
-							<input class="input100" type="password" name="contraseña" placeholder="Contraseña" required minlength="4">
+						<div class="wrap-input100 validate-input" data-validate="Contraseña obligatoria">
+							<input class="input100" type="password" name="contraseña" placeholder="Contraseña" required
+								minlength="4" maxlength="8">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-lock" aria-hidden="true"></i>
@@ -68,8 +72,9 @@
 							<span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "Teléfono obligatorio">
-							<input class="input100" type="tel" name="telefono" placeholder="Telefono" required pattern="[0-9]{8,15}" inputmode="numeric">
+						<div class="wrap-input100 validate-input" data-validate="Teléfono obligatorio">
+							<input class="input100" type="tel" name="telefono" id="telefono" placeholder="Telefono"
+								required pattern="9[0-9]{8}" maxlength="9" inputmode="numeric" value="9">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-phone" aria-hidden="true"></i>
