@@ -9,7 +9,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 60px 20px 110px;
+  padding: 42px 20px 125px;
 }
  
 .feedback-box {
@@ -87,7 +87,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   width: 80%;
 }
  
@@ -96,7 +96,7 @@
   font-size: 19px;
   color: #333;
   text-align: center;
-  margin-bottom: 8px;
+  margin: 0 0 4px;
 }
  
 .feedback-label {
@@ -140,13 +140,13 @@ select.feedback-input option {
 .feedback-textarea {
   border-radius: 15px;
   resize: none;
-  height: 100px;
+  height: 82px;
   padding-top: 10px;
 }
  
 .feedback-btn {
   width: 100%;
-  padding: 12px 20px;
+  padding: 10px 20px;
   outline: none;
   font-family: Montserrat-Bold, sans-serif;
   font-size: 14px;

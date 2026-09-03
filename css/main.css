@@ -660,6 +660,23 @@ body {
   font-size: 14px;
 }
 
+.opiniones-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 6px;
+  color: #fff;
+  font-family: Poppins-Medium, sans-serif;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.opiniones-link:hover,
+.opiniones-link:focus {
+  color: #fff;
+  opacity: 0.78;
+}
+
 .site-user-toggle {
   display: inline-flex;
   align-items: center;
