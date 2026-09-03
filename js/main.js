@@ -75,6 +75,7 @@
             alert("Inicio de sesión exitoso.");
             intentosFallidos = 0;
             actualizarContador();
+            window.location.href = "inicio.html";
             return;
         }
 

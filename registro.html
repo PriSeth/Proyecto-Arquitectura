@@ -91,34 +91,16 @@
 		</div>
 	</div>
 
-	
-
 	<footer class="project-footer">
         Proyecto elaborado por: Luis Garcia, Mia Martinez, Diego Vargas
         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-btn">
-        <img src="images/Instagram-Logo.png" alt="Síguenos en Instagram" width="80" height="50">
+		<img src="images/Instagram-Logo.png" alt="Síguenos en Instagram">
       </a>
-	  <div style="position: relative;">
-  <!-- Ícono -->
-  <div class="map-icon" id="mapIcon" title="Ver ubicación">
-    <svg viewBox="0 0 24 24" fill="#EA4335">
-      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
-    </svg>
-  </div>
-
-  <!-- Mini popup con el mapa -->
-  <div class="map-popup" id="mapPopup">
-    <div class="map-popup-header">
-      <span>Nuestra ubicación</span>
-      <button id="closePopup">&times;</button>
-    </div>
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1470.4562367073574!2d-70.73622636992111!3d-34.17034810590467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96634342188fb3a1%3A0xc54017472f5d991d!2sAIEP%20Rancagua!5e0!3m2!1ses-419!2scl!4v1788455746786!5m2!1ses-419!2scl"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
-</div>
+		<a class="map-icon" href="https://www.google.com/maps/search/?api=1&query=AIEP%20Rancagua" target="_blank" rel="noopener noreferrer" title="Ver ubicación en Google Maps" aria-label="Ver ubicación en Google Maps">
+			<svg viewBox="0 0 24 24" fill="#EA4335" aria-hidden="true">
+				<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
+			</svg>
+		</a>
 	  
     </footer>
 
@@ -127,63 +109,7 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="vendor/select2/select2.min.js"></script>
 	<script src="vendor/tilt/tilt.jquery.min.js"></script>
-	<script>
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-
-		document.getElementById('btnOtroRegistro').addEventListener('click', function () {
-			document.getElementById('registroForm').reset();
-			document.querySelectorAll('#registroForm .alert-validate').forEach(function (campo) {
-				campo.classList.remove('alert-validate');
-			});
-			document.querySelector('#registroForm input').focus();
-		});
-
-		document.querySelector('input[name="telefono"]').addEventListener('input', function () {
-			this.value = this.value.replace(/[^0-9]/g, '');
-		});
-
-		document.getElementById('registroForm').addEventListener('submit', function (event) {
-			event.preventDefault();
-			const campos = this.querySelectorAll('input');
-			let formularioValido = true;
-
-			campos.forEach(function (campo) {
-				const contenedor = campo.closest('.validate-input');
-				const campoValido = campo.checkValidity();
-				contenedor.classList.toggle('alert-validate', !campoValido);
-
-				if (!campoValido && formularioValido) {
-					formularioValido = false;
-					campo.focus();
-				}
-			});
-
-			if (formularioValido) {
-				alert('En construcción');
-			}
-		});
-
-		const icon = document.getElementById('mapIcon');
-        const popup = document.getElementById('mapPopup');
-        const closeBtn = document.getElementById('closePopup');
-
-        icon.addEventListener('click', () => {
-        popup.classList.toggle('active');
-        });
-
-        closeBtn.addEventListener('click', () => {
-        popup.classList.remove('active');
-        });
-
-        // Cierra el popup si se hace clic fuera de él
-        document.addEventListener('click', (e) => {
-        if (!icon.contains(e.target) && !popup.contains(e.target)) {
-        popup.classList.remove('active');
-        }
-        });
-	</script>
+	<script src="js/registro.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>
