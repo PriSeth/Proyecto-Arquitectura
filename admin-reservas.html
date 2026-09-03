@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Administrador - Reservas</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+
+	<style>
+		/* Estilos propios de la vista de administrador, calcados del diseño real del formulario de registro */
+		html, body {
+			height: 100%;
+		}
+
+		body {
+			background: #6a82fb;
+			background: linear-gradient(135deg, #4b6cf0 0%, #8b5cf6 50%, #d946c0 100%);
+			min-height: 100vh;
+			font-family: 'Poppins', Arial, sans-serif;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 30px 15px;
+		}
+
+		.admin-wrapper {
+			width: 100%;
+			max-width: 820px;
+			min-height: 820px;
+			background: #fff;
+			border-radius: 20px;
+			box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+			padding: 0 0 40px 0;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+		}
+
+		/* Barra de navegación superior, de extremo a extremo, con botones "invisibles" */
+		.admin-nav {
+			display: flex;
+			width: 100%;
+			border-bottom: 1px solid #eee;
+		}
+
+		.admin-nav .nav-tab {
+			flex: 1;
+			background: none;
+			border: none;
+			padding: 22px 10px;
+			font-size: 15px;
+			font-weight: 600;
+			color: #999;
+			cursor: pointer;
+			letter-spacing: 0.5px;
+			transition: all 0.25s;
+			border-bottom: 3px solid transparent;
+		}
+
+		.admin-nav .nav-tab:hover {
+			color: #57b846;
+		}
+
+		.admin-nav .nav-tab.active {
+			color: #57b846;
+			border-bottom: 3px solid #57b846;
+		}
+
+		.admin-content {
+			padding: 35px 45px 0 45px;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.admin-title {
+			font-weight: 700;
+			font-size: 24px;
+			color: #333333;
+			line-height: 1.2;
+			text-align: center;
+			display: block;
+			margin-bottom: 25px;
+		}
+
+		.admin-panel {
+			display: none;
+			flex-direction: column;
+			flex: 1;
+		}
+
+		.admin-panel.active {
+			display: flex;
+		}
+
+		.admin-toolbar {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 15px;
+			margin-bottom: 25px;
+		}
+
+		.table-responsive {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		table.table-reservas {
+			width: 100%;
+		}
+
+		table.table-reservas th,
+		table.table-reservas td {
+			text-align: center;
+		}
+
+		.admin-toolbar .search-wrap {
+			flex: 1;
+			min-width: 200px;
+			max-width: 320px;
+			position: relative;
+		}
+
+		.admin-toolbar .search-wrap i {
+			position: absolute;
+			left: 20px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #999;
+		}
+
+		.search-input {
+			width: 100%;
+			background: #f1f1f1;
+			border: none;
+			border-radius: 25px;
+			padding: 12px 20px 12px 45px;
+			font-size: 14px;
+			color: #555;
+		}
+
+		.search-input:focus {
+			outline: none;
+			background: #eaeaea;
+		}
+
+		.btn-admin-primary {
+			background-color: #57b846;
+			color: #fff;
+			border: none;
+			border-radius: 25px;
+			padding: 11px 28px;
+			font-size: 14px;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+			transition: all 0.3s;
+			white-space: nowrap;
+		}
+
+		.btn-admin-primary:hover {
+			background-color: #479a39;
+			color: #fff;
+		}
+
+		.btn-admin-outline {
+			background: none;
+			border: 1px solid #d0554f;
+			color: #d0554f;
+			border-radius: 25px;
+			padding: 6px 16px;
+			font-size: 13px;
+			font-weight: 600;
+			margin-left: 6px;
+			transition: all 0.2s;
+		}
+
+		.btn-admin-outline:hover {
+			background: #d0554f;
+			color: #fff;
+		}
+
+		.btn-admin-outline.approve {
+			border-color: #57b846;
+			color: #57b846;
+		}
+
+		.btn-admin-outline.approve:hover {
+			background: #57b846;
+			color: #fff;
+		}
+
+		table.table-reservas {
+			border-collapse: separate;
+			border-spacing: 0;
+		}
+
+		table.table-reservas thead {
+			background: #f8f8f8;
+		}
+
+		table.table-reservas thead th {
+			font-weight: 600;
+			font-size: 13px;
+			color: #666;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			vertical-align: middle;
+			border-bottom: 2px solid #eee;
+		}
+
+		table.table-reservas tbody td {
+			vertical-align: middle;
+			font-size: 14px;
+			color: #333;
+			border-color: #f0f0f0;
+		}
+
+		.badge-estado {
+			padding: 6px 14px;
+			border-radius: 15px;
+			font-size: 12px;
+			font-weight: 600;
+			color: #fff;
+		}
+
+		.badge-confirmada { background-color: #57b846; }
+		.badge-pendiente { background-color: #f0ad4e; }
+		.badge-cancelada { background-color: #e0554f; }
+
+		.btn-icon {
+			border: none;
+			background: none;
+			font-size: 16px;
+			margin: 0 4px;
+			cursor: pointer;
+		}
+
+		.btn-icon.edit { color: #4b6cf0; }
+		.btn-icon.delete { color: #e0554f; }
+
+		.empty-state {
+			text-align: center;
+			padding: 30px;
+			color: #999;
+		}
+
+		#modalReserva .modal-content {
+			border-radius: 15px;
+			border: none;
+			overflow: hidden;
+		}
+
+		#modalReserva .modal-header {
+			background: #57b846;
+			color: #fff;
+			border: none;
+		}
+
+		#modalReserva .form-control {
+			background: #f1f1f1;
+			border: none;
+			border-radius: 20px;
+			padding: 10px 18px;
+			height: auto;
+		}
+
+		#modalReserva .form-control:focus {
+			background: #eaeaea;
+			box-shadow: none;
+		}
+
+		#modalReserva label {
+			font-size: 13px;
+			font-weight: 600;
+			color: #555;
+		}
+
+		#modalReserva .btn-secondary {
+			border-radius: 20px;
+			padding: 8px 20px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div class="admin-wrapper">
+
+		<!-- Barra superior de extremo a extremo con botones tipo texto (sin fondo/borde) -->
+		<div class="admin-nav">
+			<button type="button" class="nav-tab" id="tabSolicitudes">Solicitudes</button>
+			<button type="button" class="nav-tab active" id="tabReservas">Reservas</button>
+		</div>
+
+		<div class="admin-content">
+
+			<!-- ==================== PANEL: SOLICITUDES ==================== -->
+			<div class="admin-panel" id="panelSolicitudes">
+				<span class="admin-title">Solicitudes de Reserva</span>
+
+				<div class="admin-toolbar">
+					<div class="search-wrap">
+						<i class="fa fa-search"></i>
+						<input type="text" id="buscadorSolicitudes" class="search-input" placeholder="Buscar solicitud...">
+					</div>
+				</div>
+
+				<div class="table-responsive">
+					<table class="table table-bordered table-reservas">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Cliente</th>
+								<th>Clase</th>
+								<th>Horario</th>
+								<th>Fecha</th>
+								<th style="width:180px;">Acciones</th>
+							</tr>
+						</thead>
+						<tbody id="tablaSolicitudesBody"></tbody>
+					</table>
+					<div id="estadoVacioSolicitudes" class="empty-state" style="display:none;">
+						No hay solicitudes pendientes.
+					</div>
+				</div>
+			</div>
+
+			<!-- ==================== PANEL: RESERVAS ==================== -->
+			<div class="admin-panel active" id="panelReservas">
+				<span class="admin-title">Reservas de Clases</span>
+
+				<div class="admin-toolbar">
+					<div class="search-wrap">
+						<i class="fa fa-search"></i>
+						<input type="text" id="buscador" class="search-input" placeholder="Buscar por cliente o clase...">
+					</div>
+					<button type="button" class="btn-admin-primary" id="btnNuevaReserva">
+						<i class="fa fa-plus"></i> Nueva reserva
+					</button>
+				</div>
+
+				<div class="table-responsive">
+					<table class="table table-bordered table-reservas">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Cliente</th>
+								<th>Clase</th>
+								<th>Horario</th>
+								<th>Fecha</th>
+								<th>Estado</th>
+								<th style="width:110px;">Acciones</th>
+							</tr>
+						</thead>
+						<tbody id="tablaReservasBody"></tbody>
+					</table>
+					<div id="estadoVacio" class="empty-state" style="display:none;">
+						No hay reservas registradas.
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Modal Crear / Editar Reserva -->
+	<div class="modal fade" id="modalReserva" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form id="formReserva">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalReservaTitulo">Nueva reserva</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar" style="color:#fff;">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="id">
+
+						<div class="form-group">
+							<label>Cliente</label>
+							<input type="text" name="cliente" class="form-control" required minlength="3" placeholder="Nombre del cliente">
+						</div>
+
+						<div class="form-group">
+							<label>Clase</label>
+							<select name="clase" class="form-control" required>
+								<option value="">Seleccione una clase</option>
+								<option value="Zumba">Zumba</option>
+								<option value="Spinning">Spinning</option>
+								<option value="Yoga">Yoga</option>
+								<option value="Funcional">Funcional</option>
+								<option value="Pilates">Pilates</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label>Horario</label>
+							<input type="time" name="horario" class="form-control" required>
+						</div>
+
+						<div class="form-group">
+							<label>Fecha</label>
+							<input type="date" name="fecha" class="form-control" required>
+						</div>
+
+						<div class="form-group">
+							<label>Estado</label>
+							<select name="estado" class="form-control" required>
+								<option value="Confirmada">Confirmada</option>
+								<option value="Pendiente">Pendiente</option>
+								<option value="Cancelada">Cancelada</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn-admin-primary">Guardar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/select2/select2.min.js"></script>
+
+	<script>
+		// ---------------------------------------------------
+		// Datos en memoria (reemplazar por llamadas a tu backend / API real)
+		// ---------------------------------------------------
+		let reservas = [
+			{ id: 1, cliente: "Ana Torres",    clase: "Zumba",     horario: "18:00", fecha: "2026-09-05", estado: "Confirmada" },
+			{ id: 2, cliente: "Pedro Muñoz",   clase: "Spinning",  horario: "19:00", fecha: "2026-09-05", estado: "Pendiente" },
+			{ id: 3, cliente: "Carla Reyes",   clase: "Yoga",      horario: "08:00", fecha: "2026-09-06", estado: "Cancelada" }
+		];
+
+		let solicitudes = [
+			{ id: 101, cliente: "Marcos Diaz",   clase: "Funcional", horario: "17:00", fecha: "2026-09-07" },
+			{ id: 102, cliente: "Valentina Soto", clase: "Pilates",   horario: "09:00", fecha: "2026-09-08" }
+		];
+
+		let siguienteId = 4;
+
+		// ---------------- NAVEGACIÓN ENTRE PESTAÑAS ----------------
+		const tabSolicitudes = document.getElementById('tabSolicitudes');
+		const tabReservas    = document.getElementById('tabReservas');
+		const panelSolicitudes = document.getElementById('panelSolicitudes');
+		const panelReservas    = document.getElementById('panelReservas');
+
+		function activarTab(nombre) {
+			const esSolicitudes = nombre === 'solicitudes';
+			tabSolicitudes.classList.toggle('active', esSolicitudes);
+			tabReservas.classList.toggle('active', !esSolicitudes);
+			panelSolicitudes.classList.toggle('active', esSolicitudes);
+			panelReservas.classList.toggle('active', !esSolicitudes);
+		}
+
+		tabSolicitudes.addEventListener('click', function () { activarTab('solicitudes'); });
+		tabReservas.addEventListener('click', function () { activarTab('reservas'); });
+
+		// ---------------- RESERVAS (CRUD) ----------------
+		const tablaBody   = document.getElementById('tablaReservasBody');
+		const estadoVacio = document.getElementById('estadoVacio');
+		const buscador    = document.getElementById('buscador');
+		const formReserva = document.getElementById('formReserva');
+		const modalReserva = $('#modalReserva');
+		const modalTitulo  = document.getElementById('modalReservaTitulo');
+
+		function claseBadge(estado) {
+			if (estado === 'Confirmada') return 'badge-confirmada';
+			if (estado === 'Pendiente') return 'badge-pendiente';
+			return 'badge-cancelada';
+		}
+
+		function renderTabla(filtro = '') {
+			tablaBody.innerHTML = '';
+
+			const filtroLower = filtro.trim().toLowerCase();
+			const listaFiltrada = reservas.filter(function (r) {
+				return r.cliente.toLowerCase().includes(filtroLower) ||
+					   r.clase.toLowerCase().includes(filtroLower);
+			});
+
+			estadoVacio.style.display = listaFiltrada.length === 0 ? 'block' : 'none';
+
+			listaFiltrada.forEach(function (r) {
+				const fila = document.createElement('tr');
+				fila.innerHTML = `
+					<td>${r.id}</td>
+					<td>${r.cliente}</td>
+					<td>${r.clase}</td>
+					<td>${r.horario}</td>
+					<td>${r.fecha}</td>
+					<td><span class="badge-estado ${claseBadge(r.estado)}">${r.estado}</span></td>
+					<td>
+						<button type="button" class="btn-icon edit" title="Editar" data-id="${r.id}">
+							<i class="fa fa-pencil"></i>
+						</button>
+						<button type="button" class="btn-icon delete" title="Eliminar" data-id="${r.id}">
+							<i class="fa fa-trash"></i>
+						</button>
+					</td>
+				`;
+				tablaBody.appendChild(fila);
+			});
+		}
+
+		document.getElementById('btnNuevaReserva').addEventListener('click', function () {
+			formReserva.reset();
+			formReserva.querySelector('input[name="id"]').value = '';
+			modalTitulo.textContent = 'Nueva reserva';
+			modalReserva.modal('show');
+		});
+
+		tablaBody.addEventListener('click', function (event) {
+			const btnEditar = event.target.closest('.btn-icon.edit');
+			const btnEliminar = event.target.closest('.btn-icon.delete');
+
+			if (btnEditar) {
+				const id = parseInt(btnEditar.getAttribute('data-id'), 10);
+				const reserva = reservas.find(r => r.id === id);
+				if (!reserva) return;
+
+				formReserva.querySelector('input[name="id"]').value = reserva.id;
+				formReserva.querySelector('input[name="cliente"]').value = reserva.cliente;
+				formReserva.querySelector('select[name="clase"]').value = reserva.clase;
+				formReserva.querySelector('input[name="horario"]').value = reserva.horario;
+				formReserva.querySelector('input[name="fecha"]').value = reserva.fecha;
+				formReserva.querySelector('select[name="estado"]').value = reserva.estado;
+
+				modalTitulo.textContent = 'Editar reserva';
+				modalReserva.modal('show');
+			}
+
+			if (btnEliminar) {
+				const id = parseInt(btnEliminar.getAttribute('data-id'), 10);
+				const reserva = reservas.find(r => r.id === id);
+				if (!reserva) return;
+
+				if (confirm(`¿Eliminar la reserva de "${reserva.cliente}" (${reserva.clase})?`)) {
+					reservas = reservas.filter(r => r.id !== id);
+					renderTabla(buscador.value);
+				}
+			}
+		});
+
+		formReserva.addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			const idValue   = formReserva.querySelector('input[name="id"]').value;
+			const cliente   = formReserva.querySelector('input[name="cliente"]').value.trim();
+			const clase     = formReserva.querySelector('select[name="clase"]').value;
+			const horario   = formReserva.querySelector('input[name="horario"]').value;
+			const fecha     = formReserva.querySelector('input[name="fecha"]').value;
+			const estado    = formReserva.querySelector('select[name="estado"]').value;
+
+			if (!cliente || !clase || !horario || !fecha || !estado) {
+				alert('Por favor completa todos los campos.');
+				return;
+			}
+
+			if (idValue) {
+				const id = parseInt(idValue, 10);
+				const reserva = reservas.find(r => r.id === id);
+				if (reserva) {
+					reserva.cliente = cliente;
+					reserva.clase = clase;
+					reserva.horario = horario;
+					reserva.fecha = fecha;
+					reserva.estado = estado;
+				}
+			} else {
+				reservas.push({ id: siguienteId++, cliente, clase, horario, fecha, estado });
+			}
+
+			renderTabla(buscador.value);
+			modalReserva.modal('hide');
+		});
+
+		buscador.addEventListener('input', function () { renderTabla(this.value); });
+
+		// ---------------- SOLICITUDES (Aprobar / Rechazar) ----------------
+		const tablaSolicitudesBody = document.getElementById('tablaSolicitudesBody');
+		const estadoVacioSolicitudes = document.getElementById('estadoVacioSolicitudes');
+		const buscadorSolicitudes = document.getElementById('buscadorSolicitudes');
+
+		function renderSolicitudes(filtro = '') {
+			tablaSolicitudesBody.innerHTML = '';
+
+			const filtroLower = filtro.trim().toLowerCase();
+			const listaFiltrada = solicitudes.filter(function (s) {
+				return s.cliente.toLowerCase().includes(filtroLower) ||
+					   s.clase.toLowerCase().includes(filtroLower);
+			});
+
+			estadoVacioSolicitudes.style.display = listaFiltrada.length === 0 ? 'block' : 'none';
+
+			listaFiltrada.forEach(function (s) {
+				const fila = document.createElement('tr');
+				fila.innerHTML = `
+					<td>${s.id}</td>
+					<td>${s.cliente}</td>
+					<td>${s.clase}</td>
+					<td>${s.horario}</td>
+					<td>${s.fecha}</td>
+					<td>
+						<button type="button" class="btn-admin-outline approve" data-id="${s.id}">Aprobar</button>
+						<button type="button" class="btn-admin-outline" data-id="${s.id}">Rechazar</button>
+					</td>
+				`;
+				tablaSolicitudesBody.appendChild(fila);
+			});
+		}
+
+		tablaSolicitudesBody.addEventListener('click', function (event) {
+			const btnAprobar = event.target.closest('.btn-admin-outline.approve');
+			const btnRechazar = event.target.closest('.btn-admin-outline:not(.approve)');
+
+			if (btnAprobar) {
+				const id = parseInt(btnAprobar.getAttribute('data-id'), 10);
+				const solicitud = solicitudes.find(s => s.id === id);
+				if (!solicitud) return;
+
+				reservas.push({
+					id: siguienteId++,
+					cliente: solicitud.cliente,
+					clase: solicitud.clase,
+					horario: solicitud.horario,
+					fecha: solicitud.fecha,
+					estado: 'Confirmada'
+				});
+
+				solicitudes = solicitudes.filter(s => s.id !== id);
+				renderSolicitudes(buscadorSolicitudes.value);
+				renderTabla(buscador.value);
+			}
+
+			if (btnRechazar) {
+				const id = parseInt(btnRechazar.getAttribute('data-id'), 10);
+				const solicitud = solicitudes.find(s => s.id === id);
+				if (!solicitud) return;
+
+				if (confirm(`¿Rechazar la solicitud de "${solicitud.cliente}"?`)) {
+					solicitudes = solicitudes.filter(s => s.id !== id);
+					renderSolicitudes(buscadorSolicitudes.value);
+				}
+			}
+		});
+
+		buscadorSolicitudes.addEventListener('input', function () { renderSolicitudes(this.value); });
+
+		// Render inicial
+		renderTabla();
+		renderSolicitudes();
+	</script>
+	<script src="js/main.js"></script>
+</body>
+</html>

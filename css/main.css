@@ -567,3 +567,12 @@ iframe {
     opacity: 1;
   }
 }
+
+.instagram-btn img {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.instagram-btn:hover img {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
