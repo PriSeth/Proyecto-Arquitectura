@@ -79,7 +79,7 @@
 
 						<div class="wrap-input100 validate-input" data-validate="Teléfono obligatorio">
 							<input class="input100" type="tel" name="telefono" id="telefono" placeholder="Telefono"
-								required pattern="9[0-9]{8}" maxlength="9" inputmode="numeric" value="9">
+								required pattern="9[0-9]{8}" maxlength="9" inputmode="numeric">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-phone" aria-hidden="true"></i>
@@ -96,6 +96,10 @@
 						<button id="btnOtroRegistro" type="button" class="login100-form-btn register-secondary-btn">
 							Otro registro
 						</button>
+					</div>
+
+					<div class="text-center p-t-20">
+						<a class="txt2" href="index.html">¿Ya tienes una cuenta?</a>
 					</div>
 				</form>
 			</div>
@@ -138,10 +142,6 @@
 			this.value = this.value.replace(/[^0-9]/g, '');
 		});
 
-		// ---------------------------------------------------------------
-		// Validación en tiempo real: muestra el ticket verde (✔) cuando
-		// el campo es válido, o el ícono rojo (⚠) cuando no lo es.
-		// ---------------------------------------------------------------
 		function validarCampo(campo) {
 			const contenedor = campo.closest('.wrap-input100');
 			const campoValido = campo.checkValidity();

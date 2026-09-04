@@ -1166,7 +1166,7 @@ table.table-reservas tbody td {
 			transform: translateY(-50%);
 			color: #e0554f;
 			font-size: 18px;
-			pointer-events: none;
+      pointer-events: auto;
 		}
 
 		.wrap-input100.alert-validate .validation-icon {
@@ -1209,8 +1209,8 @@ table.table-reservas tbody td {
 
 		
 
-		.wrap-input100:hover::after,
-		.wrap-input100:hover::before {
+    .wrap-input100:has(.validation-icon:hover)::after,
+    .wrap-input100:has(.validation-icon:hover)::before {
 			opacity: 1;
 			visibility: visible;
 		}
