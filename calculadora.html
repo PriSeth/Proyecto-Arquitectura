@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/boxanimation.css">
 </head>
 
-<body>
+<body class="calculator-page">
     <header class="site-header">
         <a class="site-brand" href="inicio.html" aria-label="Ir al inicio">
             <i class="fa fa-diamond" aria-hidden="true"></i>
@@ -22,18 +22,32 @@
             <a href="inicio.html">Inicio</a>
             <a href="admin-reservas.html">Reservar</a>
             <a href="#buscar">Buscar</a>
-            <a href="opinion.html">Opinión</a>
+            <a href="calculadora.html">Calculadora</a>
         </nav>
+
+        <div class="site-user">
+            <a class="opiniones-link" href="opinion.html">
+                <i class="fa fa-commenting-o" aria-hidden="true"></i> Opine aquí
+            </a>
+            <button type="button" class="site-user-toggle" id="userMenuToggle" aria-expanded="false" aria-controls="userMenu">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                <span>admin</span>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="user-menu" id="userMenu" hidden>
+                <a href="index.html"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión</a>
+            </div>
+        </div>
     </header>
 
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100">
+            <div class="wrap-login100 feedback-box calculator-box">
                 <form class="login100-form" onsubmit="calcular(event)">
                     <h2 class="login100-form-title">Calculadora Gym IMC</h2>
 
                     <div class="wrap-input100">
-                        <input class="input100" type="number" id="peso" min="1" step="0.1" value="70" placeholder="Peso (kg)" required>
+                        <input class="input100" type="number" id="peso" min="1" step="0.1" placeholder="Peso (kg)" required>
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-balance-scale" aria-hidden="true"></i>
@@ -41,7 +55,7 @@
                     </div>
 
                     <div class="wrap-input100">
-                        <input class="input100" type="number" id="altura" min="1" step="0.1" value="170" placeholder="Altura (cm)" required>
+                        <input class="input100" type="number" id="altura" min="1" step="0.1" placeholder="Altura (cm)" required>
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-arrows-v" aria-hidden="true"></i>
@@ -49,7 +63,7 @@
                     </div>
 
                     <div class="wrap-input100">
-                        <input class="input100" type="number" id="duracion" min="1" step="1" value="45" placeholder="Actividad (minutos)" required>
+                        <input class="input100" type="number" id="duracion" min="1" step="1" placeholder="Actividad (minutos)" required>
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
@@ -68,6 +82,14 @@
 
     <footer class="project-footer">
         <span>Proyecto elaborado por: Luis Garcia, Mia Martinez, Diego Vargas</span>
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-btn">
+            <img src="images/Instagram-Logo.png" alt="Síguenos en Instagram">
+        </a>
+        <a class="map-icon" href="https://www.google.com/maps/search/?api=1&query=AIEP%20Rancagua" target="_blank" rel="noopener noreferrer" title="Ver ubicación en Google Maps" aria-label="Ver ubicación en Google Maps">
+            <svg viewBox="0 0 24 24" fill="#EA4335" aria-hidden="true">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
+            </svg>
+        </a>
     </footer>
 
     <script src="js/site-header.js"></script>
