@@ -1127,8 +1127,7 @@ table.table-reservas tbody td {
     align-items: stretch;
   }
 }
-/* Contenedor del ícono de éxito: mismo lugar que el ícono de error */
-		.validation-icon-success,
+.validation-icon-success,
 		.validation-icon {
 			font-family: "FontAwesome" !important;
 		}
@@ -1184,5 +1183,35 @@ table.table-reservas tbody td {
 
 		.wrap-input100.confirm-validate input {
 			border-bottom: 2px solid #57b846;
+		}
+
+		/* ====== Tooltip "obligatorio" arriba de la casilla, sin recortes ====== */
+		
+
+		.wrap-input100::after {
+			content: attr(data-validate);
+			position: absolute;
+			bottom: 100%;
+			left: 0;
+			margin-bottom: 10px;
+			background: #333;
+			color: #fff;
+			padding: 6px 14px;
+			border-radius: 6px;
+			font-size: 12px;
+			white-space: nowrap;
+			z-index: 999;
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+			transition: opacity 0.2s ease;
+		}
+
+		
+
+		.wrap-input100:hover::after,
+		.wrap-input100:hover::before {
+			opacity: 1;
+			visibility: visible;
 		}
 	
