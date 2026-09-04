@@ -42,8 +42,6 @@ function calcular(event) {
     }
 
     const calorias = (6.0 * peso * (duracion / 60)).toFixed(0);
-
-    // Muestro también los datos ingresados, para que quede como referencia
     resultado.innerHTML = `
         <h3>Resultados</h3>
         <p>
