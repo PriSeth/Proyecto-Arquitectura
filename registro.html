@@ -25,7 +25,7 @@
 					<div class="register-form-grid">
 						<div class="wrap-input100 validate-input" data-validate="Nombre completo obligatorio">
 							<input class="input100" type="text" name="nombre" id="name" placeholder="Nombre completo"
-								required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}">
+								required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:[ ][A-Za-zÁÉÍÓÚáéíóúÑñ]+)+" autocomplete="name">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-user" aria-hidden="true"></i>
@@ -34,7 +34,7 @@
 							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate="RUT obligatorio">
+						<div class="wrap-input100 validate-input" data-validate="RUT obligatorio y válido">
 							<input class="input100" type="text" name="rut" id="rut" placeholder="RUT" required
 								pattern="^\d{1,2}\.\d{3}\.\d{3}-[0-9Kk]$" maxlength="12" autocomplete="off" inputmode="numeric">
 							<span class="focus-input100"></span>
@@ -46,7 +46,8 @@
 						</div>
 
 						<div class="wrap-input100 validate-input" data-validate = "Correo obligatorio: ejemplo@abc.xyz">
-							<input class="input100" type="email" name="correo" placeholder="Correo" required>
+							<input class="input100" type="email" name="correo" placeholder="Correo" required
+								pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" autocomplete="email">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -57,7 +58,7 @@
 
 						<div class="wrap-input100 validate-input" data-validate="Usuario obligatorio">
 							<input class="input100" type="text" name="usuario" placeholder="Usuario" required
-								minlength="3" maxlength="10">
+								pattern="[A-Za-z0-9_]{3,10}" minlength="3" maxlength="10" autocomplete="username">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-user-circle" aria-hidden="true"></i>
@@ -68,7 +69,7 @@
 
 						<div class="wrap-input100 validate-input" data-validate="Contraseña obligatoria">
 							<input class="input100" type="password" name="contraseña" placeholder="Contraseña" required
-								minlength="4" maxlength="8">
+								pattern="\S{4,8}" minlength="4" maxlength="8" autocomplete="new-password">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-lock" aria-hidden="true"></i>
@@ -78,7 +79,7 @@
 						</div>
 
 						<div class="wrap-input100 validate-input" data-validate="Teléfono obligatorio">
-							<input class="input100" type="tel" name="telefono" id="telefono" placeholder="Telefono"
+							<input class="input100" type="tel" name="telefono" id="telefono" placeholder="Teléfono"
 								required pattern="9[0-9]{8}" maxlength="9" inputmode="numeric">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
@@ -138,12 +139,69 @@
 			document.querySelector('#registroForm input').focus();
 		});
 
-		document.querySelector('input[name="telefono"]').addEventListener('input', function () {
-			this.value = this.value.replace(/[^0-9]/g, '');
+		const campoNombre = document.querySelector('input[name="nombre"]');
+		const campoRut = document.querySelector('input[name="rut"]');
+		const campoCorreo = document.querySelector('input[name="correo"]');
+		const campoUsuario = document.querySelector('input[name="usuario"]');
+		const campoTelefono = document.querySelector('input[name="telefono"]');
+
+		campoNombre.addEventListener('input', function () {
+			this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, '').replace(/\s{2,}/g, ' ');
 		});
+
+		campoRut.addEventListener('input', function () {
+			const caracteresRut = this.value.replace(/[^0-9Kk]/g, '').toUpperCase();
+			if (caracteresRut.length < 8) {
+				this.value = caracteresRut;
+				return;
+			}
+
+			const cuerpo = caracteresRut.slice(0, -1).slice(0, 8);
+			const digitoVerificador = caracteresRut.slice(-1);
+
+			const cuerpoFormateado = cuerpo.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+			this.value = cuerpoFormateado + (digitoVerificador ? '-' + digitoVerificador : '');
+		});
+
+		campoCorreo.addEventListener('input', function () {
+			this.value = this.value.replace(/\s/g, '');
+		});
+
+		campoUsuario.addEventListener('input', function () {
+			this.value = this.value.replace(/[^A-Za-z0-9_]/g, '');
+		});
+
+		campoTelefono.addEventListener('input', function () {
+			this.value = this.value.replace(/\D/g, '').slice(0, 9);
+		});
+
+		function rutEsValido(rut) {
+			const rutLimpio = rut.replace(/[.\-]/g, '').toUpperCase();
+			if (!/^\d{7,8}[0-9K]$/.test(rutLimpio)) {
+				return false;
+			}
+
+			const cuerpo = rutLimpio.slice(0, -1);
+			const digitoEsperado = rutLimpio.slice(-1);
+			let suma = 0;
+			let multiplicador = 2;
+
+			for (let indice = cuerpo.length - 1; indice >= 0; indice--) {
+				suma += Number(cuerpo[indice]) * multiplicador;
+				multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+			}
+
+			const resto = 11 - (suma % 11);
+			const digitoCalculado = resto === 11 ? '0' : resto === 10 ? 'K' : String(resto);
+			return digitoEsperado === digitoCalculado;
+		}
 
 		function validarCampo(campo) {
 			const contenedor = campo.closest('.wrap-input100');
+			if (campo === campoRut) {
+				campo.setCustomValidity(rutEsValido(campo.value) ? '' : 'Ingresa un RUT válido');
+			}
+
 			const campoValido = campo.checkValidity();
 
 			contenedor.classList.toggle('confirm-validate', campoValido);
