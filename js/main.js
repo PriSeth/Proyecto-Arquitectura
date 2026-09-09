@@ -5,7 +5,6 @@
     const contrasena = document.getElementById("inputContrasena");
     const botonLogin = document.getElementById("btnLogin");
     const contadorIntentos = document.getElementById("contadorIntentos");
-    const formularioLogin = botonLogin ? botonLogin.form : null;
 
     const credencialesValidas = {
         usuario: "admin",
