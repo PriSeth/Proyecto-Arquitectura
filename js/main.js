@@ -5,6 +5,7 @@
     const contrasena = document.getElementById("inputContrasena");
     const botonLogin = document.getElementById("btnLogin");
     const contadorIntentos = document.getElementById("contadorIntentos");
+    
 
     const credencialesValidas = {
         usuario: "admin",
@@ -14,6 +15,12 @@
     if (!usuario || !contrasena || !botonLogin) {
         return;
     }
+
+    const formularioLogin = document.querySelector(".login100-form");
+    formularioLogin.addEventListener("submit", function (e) {
+        e.preventDefault();
+        procesarLogin();
+    });
 
     let intentosFallidos = 0;
     let bloqueoActivo = false;
@@ -97,14 +104,11 @@
         }
     }
 
-    formularioLogin.addEventListener("submit", function (e) {
-        e.preventDefault();
-        procesarLogin();
-    });
-
     function habilitarUsuario() {
         usuario.disabled = false;
-        usuario.focus();
+        setTimeout(function () {
+        usuario.focus(); 
+        }, 50);
     }
 
     function habilitarContrasena() {
@@ -118,6 +122,7 @@
 
     /* Se ejecuta cuando el captcha se resuelve */
     window.onCaptchaSuccess = function () {
+        console.log("captcha resuelto, habilitando usuario");
         habilitarUsuario();
     };
 

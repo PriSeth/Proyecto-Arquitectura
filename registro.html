@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+	
 <head>
 	<title>Registro</title>
 	<meta charset="UTF-8">
@@ -13,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
+
 <body>
 	<div class="limiter">
 		<div class="container-login100">
@@ -25,7 +27,7 @@
 					<div class="register-form-grid">
 						<div class="wrap-input100 validate-input" data-validate="Nombre completo obligatorio">
 							<input class="input100" type="text" name="nombre" id="name" placeholder="Nombre completo"
-								required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:[ ][A-Za-zÁÉÍÓÚáéíóúÑñ]+)+" autocomplete="name">
+								required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:[ ][A-Za-zÁÉÍÓÚáéíóúÑñ]+)+"autocomplete="name">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-user" aria-hidden="true"></i>
@@ -36,7 +38,8 @@
 
 						<div class="wrap-input100 validate-input" data-validate="RUT obligatorio y válido">
 							<input class="input100" type="text" name="rut" id="rut" placeholder="RUT" required
-								pattern="^\d{1,2}\.\d{3}\.\d{3}-[0-9Kk]$" maxlength="12" autocomplete="off" inputmode="numeric">
+								pattern="^\d{1,2}\.\d{3}\.\d{3}-[0-9Kk]$" maxlength="12" autocomplete="off"
+								inputmode="numeric">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-id-card" aria-hidden="true"></i>
@@ -45,9 +48,9 @@
 							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
 						</div>
 
-						<div class="wrap-input100 validate-input" data-validate = "Correo obligatorio: ejemplo@abc.xyz">
-							<input class="input100" type="email" name="correo" placeholder="Correo" required
-								pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" autocomplete="email">
+						<div class="wrap-input100 validate-input" data-validate="Correo obligatorio: ejemplo@abc.xyz">
+							<input class="input100" type="email" id="campoCorreo" name="correo" placeholder="Correo"
+								required pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" autocomplete="email">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -80,7 +83,7 @@
 
 						<div class="wrap-input100 validate-input" data-validate="Teléfono obligatorio">
 							<input class="input100" type="tel" name="telefono" id="telefono" placeholder="Teléfono"
-								required pattern="9[0-9]{8}" maxlength="9" inputmode="numeric">
+								required pattern="9[0-9]{8}" maxlength="9" inputmode="numeric" value="9">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
 								<i class="fa fa-phone" aria-hidden="true"></i>
@@ -108,17 +111,20 @@
 	</div>
 
 	<footer class="project-footer">
-        Proyecto elaborado por: Luis Garcia, Mia Martinez, Diego Vargas
-        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="instagram-btn">
-		<img src="images/Instagram-Logo.png" alt="Síguenos en Instagram">
-      </a>
-		<a class="map-icon" href="https://www.google.com/maps/search/?api=1&query=AIEP%20Rancagua" target="_blank" rel="noopener noreferrer" title="Ver ubicación en Google Maps" aria-label="Ver ubicación en Google Maps">
+		Proyecto elaborado por: Luis Garcia, Mia Martinez, Diego Vargas
+		<a href="https://www.instagram.com/aiep_rancagua/" target="_blank" rel="noopener noreferrer"
+			class="instagram-btn">
+			<img src="images/Instagram-Logo.png" alt="Síguenos en Instagram">
+		</a>
+		<a class="map-icon" href="https://www.google.com/maps/search/?api=1&query=AIEP%20Rancagua" target="_blank"
+			rel="noopener noreferrer" title="Ver ubicación en Google Maps" aria-label="Ver ubicación en Google Maps">
 			<svg viewBox="0 0 24 24" fill="#EA4335" aria-hidden="true">
-				<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
+				<path
+					d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
 			</svg>
 		</a>
-	  
-    </footer>
+
+	</footer>
 
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="vendor/bootstrap/js/popper.js"></script>
@@ -180,7 +186,6 @@
 			if (!/^\d{7,8}[0-9K]$/.test(rutLimpio)) {
 				return false;
 			}
-
 			const cuerpo = rutLimpio.slice(0, -1);
 			const digitoEsperado = rutLimpio.slice(-1);
 			let suma = 0;
@@ -196,10 +201,20 @@
 			return digitoEsperado === digitoCalculado;
 		}
 
+		function correoEsValido(valor) {
+			return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(valor.trim());
+		}
+
+
 		function validarCampo(campo) {
 			const contenedor = campo.closest('.wrap-input100');
+
 			if (campo === campoRut) {
 				campo.setCustomValidity(rutEsValido(campo.value) ? '' : 'Ingresa un RUT válido');
+			}
+
+			if (campo === campoCorreo) {
+				campo.setCustomValidity(correoEsValido(campo.value) ? '' : 'Ingresa un correo válido (ejemplo@dominio.com)');
 			}
 
 			const campoValido = campo.checkValidity();
@@ -241,10 +256,11 @@
 				primerCampoInvalido.focus();
 				return;
 			}
-
 			alert('En construcción');
 		});
 	</script>
 	<script src="js/main.js"></script>
+	<script src="js/registro.js"></script>
 </body>
+
 </html>
