@@ -53,6 +53,51 @@ body, html {
   font-size: 12px;
   line-height: 1.4;
   text-align: center;
+  transform: translateY(calc(100% - 12px));
+  transition: transform 0.3s ease;
+}
+
+.project-footer.footer-open {
+  transform: translateY(0);
+}
+
+.footer-credit {
+  display: block;
+  text-align: center;
+}
+
+.footer-contacts {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 3px auto 6px;
+  max-width: 700px;
+}
+
+.footer-contact {
+  flex: 1;
+  color: #555;
+  text-align: center;
+}
+
+.footer-contact:hover {
+  color: #57b846;
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-socials .map-icon {
+  position: static;
+  transform: none;
+}
+
+.footer-socials .map-icon:hover {
+  transform: scale(1.08);
 }
 
 .project-footer .map-icon {
@@ -258,25 +303,6 @@ iframe {
 .wrap-register100 {
   padding: 80px 110px 40px 95px;
   justify-content: center;
-}
-
-.calculator-page .container-login100 {
-  min-height: 0;
-  padding: 40px 15px 55px;
-  background: #fff;
-}
-
-.calculator-page .calculator-box {
-  width: min(100%, 520px);
-  min-height: 0;
-  padding: 45px 55px 40px;
-  justify-content: center;
-}
-
-.calculator-page .login100-form {
-  position: relative;
-  z-index: 10;
-  width: 100%;
 }
 
 .register100-form {
@@ -599,8 +625,8 @@ iframe {
 }
 
 .instagram-btn img {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   object-fit: contain;
   vertical-align: middle;
   transition: transform 0.2s ease, opacity 0.2s ease;
@@ -609,6 +635,33 @@ iframe {
 .instagram-btn:hover img {
     transform: scale(1.1);
     opacity: 0.8;
+}
+
+.Facebook-btn img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  vertical-align: middle;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.twitter-btn img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  vertical-align: middle;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+@media (max-width: 600px) {
+  .footer-contacts {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer-socials {
+    gap: 8px;
+  }
 }
 
 /* Estilos propios de la vista de administrador */
@@ -638,12 +691,6 @@ body {
 .site-nav a {
   color: #fff;
   font-family: Poppins-Medium, sans-serif;
-}
-
-.site-brand,
-.site-nav a,
-.opiniones-link {
-  text-decoration: none;
 }
 
 .site-brand {
@@ -1191,7 +1238,7 @@ table.table-reservas tbody td {
 			transform: translateY(-50%);
 			color: #e0554f;
 			font-size: 18px;
-      pointer-events: auto;
+			pointer-events: none;
 		}
 
 		.wrap-input100.alert-validate .validation-icon {
@@ -1232,10 +1279,8 @@ table.table-reservas tbody td {
 			transition: opacity 0.2s ease;
 		}
 
-		
-
-    .wrap-input100:has(.validation-icon:hover)::after,
-    .wrap-input100:has(.validation-icon:hover)::before {
+		.wrap-input100:hover::after,
+		.wrap-input100:hover::before {
 			opacity: 1;
 			visibility: visible;
 		}
