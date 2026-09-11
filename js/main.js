@@ -24,6 +24,7 @@
 
     let intentosFallidos = 0;
     let bloqueoActivo = false;
+    let captchaResuelto = false;
     const duracionBloqueo = 60;
 
     function actualizarContador() {
@@ -66,9 +67,15 @@
             }
         }, 1000);
     }
-
+    
     function procesarLogin() {
         if (bloqueoActivo) {
+            return;
+        }
+
+        if (!captchaResuelto) {
+            alert("Debes completar la verificación de seguridad (captcha) antes de ingresar.");
+            reiniciarCaptcha();
             return;
         }
 
@@ -88,19 +95,13 @@
         intentosFallidos += 1;
         actualizarContador();
         limpiarCredenciales();
-
-        /* Recargar Captcha */
-        if (typeof grecaptcha !== "undefined") {
-            grecaptcha.reset();
-        }
+        reiniciarCaptcha();
 
         if (intentosFallidos >= 3) {
             alert("Has alcanzado el límite de intentos. Intente nuevamente en 1 minuto.");
             bloquearLogin();
         } else {
             alert("Usuario o contraseña incorrectos. Intento " + intentosFallidos + " de 3.");
-            usuario.disabled = false;
-            usuario.focus();
         }
     }
 
@@ -121,17 +122,39 @@
     }
 
     /* Se ejecuta cuando el captcha se resuelve */
+    const captchaStep = document.getElementById("captchaStep");
+    const captchaStepDone = document.getElementById("captchaStepDone");
+
+    function reiniciarCaptcha() {
+        captchaResuelto = false;
+        if (typeof grecaptcha !== "undefined") {
+            grecaptcha.reset();
+        }
+        usuario.disabled = true;
+        contrasena.disabled = true;
+        contrasena.value = "";
+        botonLogin.disabled = true;
+        if (captchaStep) captchaStep.classList.remove("captcha-step-collapsed");
+        if (captchaStepDone) captchaStepDone.hidden = true;
+    }
+
     window.onCaptchaSuccess = function () {
         console.log("captcha resuelto, habilitando usuario");
+        captchaResuelto = true;
+        if (captchaStep) captchaStep.classList.add("captcha-step-collapsed");
+        if (captchaStepDone) captchaStepDone.hidden = false;
         habilitarUsuario();
     };
 
     /* Si el captcha vence se bloquea todo otra vez */
     window.onCaptchaExpired = function () {
+        captchaResuelto = false;
         usuario.disabled = true;
         contrasena.disabled = true;
         botonLogin.disabled = true;
         contrasena.value = "";
+        if (captchaStep) captchaStep.classList.remove("captcha-step-collapsed");
+        if (captchaStepDone) captchaStepDone.hidden = true;
     };
 
     /* Al presionar Enter en el usuario, se habilita contraseña */
