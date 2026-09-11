@@ -40,11 +40,8 @@ body, html {
 }
 
 .project-footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
+  position: relative;
+  width: 100%;
   padding: 8px 15px;
   background: #fff;
   box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.18);
@@ -53,12 +50,6 @@ body, html {
   font-size: 12px;
   line-height: 1.4;
   text-align: center;
-  transform: translateY(calc(100% - 12px));
-  transition: transform 0.3s ease;
-}
-
-.project-footer.footer-open {
-  transform: translateY(0);
 }
 
 .footer-credit {
@@ -118,6 +109,7 @@ a {
 	line-height: 1.7;
 	color: #666666;
 	margin: 0px;
+  text-decoration: none;
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
@@ -645,12 +637,22 @@ iframe {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+.Facebook-btn:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
 .twitter-btn img {
   width: 50px;
   height: 50px;
   object-fit: contain;
   vertical-align: middle;
   transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.twitter-btn:hover img {
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 @media (max-width: 600px) {
@@ -672,6 +674,18 @@ html, body {
 body {
   background: #fff;
   color: #333;
+}
+
+.calculator-page {
+  background: #fff;
+}
+
+.calculator-page .container-login100 {
+  min-height: calc(100vh - 76px);
+  align-items: flex-start;
+  padding-top: 42px;
+  padding-bottom: 40px;
+  background: #fff;
 }
 
 .site-header {
@@ -925,6 +939,7 @@ body {
 }
 
 .inicio-carrusel {
+  position: relative;
   width: min(100%, 760px);
   aspect-ratio: 16 / 8;
   overflow: hidden;
@@ -938,6 +953,34 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.carrusel-indicadores {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  display: flex;
+  gap: 8px;
+  transform: translateX(-50%);
+}
+
+.carrusel-indicador {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.carrusel-indicador:hover,
+.carrusel-indicador:focus-visible,
+.carrusel-indicador.activo {
+  background: #c850c0;
+  transform: scale(1.2);
 }
 
 .carrusel-control {

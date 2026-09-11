@@ -16,10 +16,3 @@ if (userMenuToggle && userMenu) {
 	});
 }
 
-const projectFooter = document.querySelector('.project-footer');
-
-if (projectFooter) {
-	document.addEventListener('wheel', function (event) {
-		projectFooter.classList.toggle('footer-open', event.deltaY > 0);
-	}, { passive: true });
-}

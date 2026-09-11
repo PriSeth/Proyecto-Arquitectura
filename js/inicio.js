@@ -2,6 +2,7 @@ const carrusel = document.getElementById('inicioCarrusel');
 const imagenCarrusel = document.getElementById('imagenCarrusel');
 const botonAnterior = document.getElementById('carruselAnterior');
 const botonSiguiente = document.getElementById('carruselSiguiente');
+const indicadores = document.getElementById('carruselIndicadores');
 
 const imagenes = [
 	{ src: 'images/fuerza.png', alt: 'Entrenamiento de fuerza' },
@@ -17,6 +18,18 @@ const imagenes = [
 let indiceActual = 0;
 let temporizador;
 
+imagenes.forEach(function (imagen, indice) {
+	const indicador = document.createElement('button');
+	indicador.type = 'button';
+	indicador.className = 'carrusel-indicador';
+	indicador.setAttribute('aria-label', `Mostrar imagen ${indice + 1}: ${imagen.alt}`);
+	indicador.addEventListener('click', function () {
+		mostrarImagen(indice, indice >= indiceActual ? 'siguiente' : 'anterior');
+		reiniciarTemporizador();
+	});
+	indicadores.appendChild(indicador);
+});
+
 function mostrarImagen(indice, direccion) {
 	indiceActual = (indice + imagenes.length) % imagenes.length;
 	carrusel.classList.remove('slide-left', 'slide-right');
@@ -24,13 +37,18 @@ function mostrarImagen(indice, direccion) {
 	carrusel.classList.add(direccion === 'anterior' ? 'slide-left' : 'slide-right');
 	imagenCarrusel.src = imagenes[indiceActual].src;
 	imagenCarrusel.alt = imagenes[indiceActual].alt;
+	indicadores.querySelectorAll('.carrusel-indicador').forEach(function (indicador, indiceIndicador) {
+		const activo = indiceIndicador === indiceActual;
+		indicador.classList.toggle('activo', activo);
+		indicador.setAttribute('aria-current', activo ? 'true' : 'false');
+	});
 }
 
 function reiniciarTemporizador() {
 	clearInterval(temporizador);
 	temporizador = setInterval(function () {
 		mostrarImagen(indiceActual + 1, 'siguiente');
-	}, 5000);
+	}, 3000);
 }
 
 botonAnterior.addEventListener('click', function () {
@@ -43,4 +61,5 @@ botonSiguiente.addEventListener('click', function () {
 	reiniciarTemporizador();
 });
 
+mostrarImagen(indiceActual, 'siguiente');
 reiniciarTemporizador();

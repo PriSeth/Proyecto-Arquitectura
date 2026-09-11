@@ -162,6 +162,82 @@ select.feedback-input option {
 .feedback-btn:hover {
   background: #333333;
 }
+
+.calculator-box {
+  width: 100%;
+  max-width: 460px;
+  min-height: 560px;
+  padding: 0;
+}
+
+.calculator-form {
+  z-index: 10;
+  width: 80%;
+}
+
+.calculator-form .login100-form-title {
+  width: 100%;
+  padding: 0;
+  margin: 0 0 4px;
+  font-family: Poppins-Bold, sans-serif;
+  font-size: 19px;
+  color: #333;
+  line-height: 1.2;
+}
+
+.calculator-form .wrap-input100 {
+  margin: 0;
+}
+
+.calculator-form .feedback-input {
+  height: auto;
+  padding: 10px 18px 10px 48px;
+  background: #f8f8f8;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+.calculator-form .feedback-input:focus {
+  background: #fff;
+  border-color: #57b846;
+  box-shadow: 0 0 0 3px rgba(87, 184, 70, 0.2);
+  outline: none;
+}
+
+.calculator-form .feedback-input:hover,
+.calculator-form .feedback-input:focus {
+  filter: none;
+  text-shadow: none;
+}
+
+.calculator-form .symbol-input100 {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  padding-left: 18px;
+  color: #777;
+  pointer-events: none;
+}
+
+.calculator-form .feedback-input:focus + .symbol-input100 {
+  color: #57b846;
+}
+
+.calculator-form .container-login100-form-btn {
+  padding-top: 0;
+}
+
+.calculator-form .feedback-btn {
+  width: 70%;
+  max-width: 220px;
+}
+
+.calculator-form .resultado {
+  width: 100%;
+}
+
  
 @media (max-width: 576px) {
   .feedback-box {
