@@ -25,8 +25,8 @@
 					</span>
 
 					<div class="register-form-grid">
-						<div class="wrap-input100 validate-input" data-validate="Nombre completo obligatorio">
-							<input class="input100" type="text" name="nombre" id="name" placeholder="Nombre completo"
+						<div class="wrap-input100 validate-input" data-validate="Nombre y apellido obligatorios">
+							<input class="input100" type="text" name="nombre" id="name" placeholder="Nombre y apellido"
 								required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?:[ ][A-Za-zÁÉÍÓÚáéíóúÑñ]+)+"autocomplete="name">
 							<span class="focus-input100"></span>
 							<span class="symbol-input100">
@@ -149,10 +149,15 @@
 		const campoRut = document.querySelector('input[name="rut"]');
 		const campoCorreo = document.querySelector('input[name="correo"]');
 		const campoUsuario = document.querySelector('input[name="usuario"]');
+		const campoContrasena = document.querySelector('input[name="contraseña"]');
 		const campoTelefono = document.querySelector('input[name="telefono"]');
 
 		campoNombre.addEventListener('input', function () {
 			this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, '').replace(/\s{2,}/g, ' ');
+		});
+
+		campoNombre.addEventListener('blur', function () {
+			this.value = this.value.trim();
 		});
 
 		campoRut.addEventListener('input', function () {
@@ -175,6 +180,10 @@
 
 		campoUsuario.addEventListener('input', function () {
 			this.value = this.value.replace(/[^A-Za-z0-9_]/g, '');
+		});
+
+		campoContrasena.addEventListener('input', function () {
+			this.value = this.value.replace(/\s/g, '');
 		});
 
 		campoTelefono.addEventListener('input', function () {
