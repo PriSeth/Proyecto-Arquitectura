@@ -7,11 +7,6 @@
     const contadorIntentos = document.getElementById("contadorIntentos");
     
 
-    const credencialesValidas = {
-        usuario: "admin",
-        contrasena: "1234"
-    };
-
     if (!usuario || !contrasena || !botonLogin) {
         return;
     }
@@ -68,7 +63,7 @@
         }, 1000);
     }
     
-    function procesarLogin() {
+    async function procesarLogin() {
         if (bloqueoActivo) {
             return;
         }
@@ -79,29 +74,37 @@
             return;
         }
 
-        const usuarioIngresado = usuario.value.trim();
-        const contrasenaIngresada = contrasena.value;
-        const credencialesCorrectas = usuarioIngresado === credencialesValidas.usuario
-            && contrasenaIngresada === credencialesValidas.contrasena;
+        const datos = new FormData();
+        datos.append("usuario", usuario.value.trim());
+        datos.append("contrasena", contrasena.value);
 
-        if (credencialesCorrectas) {
-            alert("Inicio de sesión exitoso.");
-            intentosFallidos = 0;
+        try {
+            const respuesta = await fetch("php/iniciar_sesion.php", {
+                method: "POST",
+                body: datos
+            });
+            const resultado = await respuesta.json();
+
+            if (respuesta.ok && resultado.ok) {
+                intentosFallidos = 0;
+                actualizarContador();
+                window.location.href = resultado.redireccion;
+                return;
+            }
+
+            throw new Error(resultado.mensaje || "No se pudo iniciar sesión.");
+        } catch (error) {
+            intentosFallidos += 1;
             actualizarContador();
-            window.location.href = "inicio.html";
-            return;
-        }
+            limpiarCredenciales();
+            reiniciarCaptcha();
 
-        intentosFallidos += 1;
-        actualizarContador();
-        limpiarCredenciales();
-        reiniciarCaptcha();
-
-        if (intentosFallidos >= 3) {
-            alert("Has alcanzado el límite de intentos. Intente nuevamente en 1 minuto.");
-            bloquearLogin();
-        } else {
-            alert("Usuario o contraseña incorrectos. Intento " + intentosFallidos + " de 3.");
+            if (intentosFallidos >= 3) {
+                alert("Has alcanzado el límite de intentos. Intente nuevamente en 1 minuto.");
+                bloquearLogin();
+            } else {
+                alert(error.message + " Intento " + intentosFallidos + " de 3.");
+            }
         }
     }
 

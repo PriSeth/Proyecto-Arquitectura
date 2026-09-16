@@ -19,7 +19,7 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 wrap-register100">
-				<form id="registroForm" class="login100-form register100-form validate-form" novalidate>
+				<form id="registroForm" action="php/registrar_usuario.php" method="POST" class="login100-form register100-form validate-form" novalidate>
 					<span class="login100-form-title register100-form-title">
 						Registra tu cuenta
 					</span>
@@ -257,7 +257,6 @@
 		});
 
 		document.getElementById('registroForm').addEventListener('submit', function (event) {
-			event.preventDefault();
 			let formularioValido = true;
 			let primerCampoInvalido = null;
 
@@ -270,10 +269,10 @@
 			});
 
 			if (!formularioValido) {
+				event.preventDefault();
 				primerCampoInvalido.focus();
 				return;
 			}
-			alert('En construcción');
 		});
 	</script>
 	<script src="js/main.js"></script>

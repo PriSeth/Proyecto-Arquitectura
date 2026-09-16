@@ -32,7 +32,7 @@
       </a>
 			<button type="button" class="site-user-toggle" id="userMenuToggle" aria-expanded="false" aria-controls="userMenu">
 				<i class="fa fa-user-circle" aria-hidden="true"></i>
-				<span>admin</span>
+        <span id="nombreUsuario">Cargando...</span>
 				<i class="fa fa-chevron-down" aria-hidden="true"></i>
 			</button>
 			<div class="user-menu" id="userMenu" hidden>
@@ -44,29 +44,29 @@
   <div class="feedback-wrap">
     <div class="feedback-box">
       <div class="feedback-form-container">
-        <form action="https://api.formpaste.com/submit" method="POST" class="feedback-form-content">
+        <form action="php/guardar_opinion.php" method="POST" class="feedback-form-content">
           <h2>Déjanos tu opinión</h2>
 
           <label class="feedback-label">Nombre
-            <input type="text" name="name" class="feedback-input" placeholder="Tu nombre" />
+            <input type="text" name="nombre" class="feedback-input" placeholder="Tu nombre" required />
           </label>
 
           <label class="feedback-label">Correo Electrónico
-            <input type="email" name="email" class="feedback-input" placeholder="tu@ejemplo.com" autocomplete="email" required title="Ingrese un correo electrónico válido" />
+            <input type="email" name="correo" class="feedback-input" placeholder="tu@ejemplo.com" autocomplete="email" required title="Ingrese un correo electrónico válido" />
           </label>
 
           <label class="feedback-label">Calificación
-            <select name="rating" required class="feedback-input">
-              <option>5 - Excelente</option>
-              <option>4 - Bueno</option>
-              <option>3 - Aceptable</option>
-              <option>2 - Malo</option>
-              <option>1 - Muy malo</option>
+            <select name="calificacion" required class="feedback-input">
+              <option value="5">5 - Excelente</option>
+              <option value="4">4 - Bueno</option>
+              <option value="3">3 - Aceptable</option>
+              <option value="2">2 - Malo</option>
+              <option value="1">1 - Muy malo</option>
             </select>
           </label>
 
           <label class="feedback-label">Tu comentario
-            <textarea name="message" required class="feedback-input feedback-textarea"></textarea>
+            <textarea name="comentario" required class="feedback-input feedback-textarea"></textarea>
           </label>
 
           <button type="submit" class="feedback-btn">Enviar comentario</button>
@@ -99,6 +99,6 @@
     </div>
   </footer>
 
-	<script src="js/site-header.js"></script>
+  <script src="js/site-header.js?v=2"></script>
 </body>
 </html>
