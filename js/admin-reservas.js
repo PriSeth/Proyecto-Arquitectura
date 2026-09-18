@@ -113,6 +113,18 @@ async function cambiarEstado(idReserva, estado) {
 	await cargarReservas();
 }
 
+const horariosPorClase = {
+	Zumba: '08:30',
+	Spinning: '09:30',
+	Yoga: '10:30',
+	Funcional: '11:30',
+	Pilates: '12:30'
+};
+
+formReserva.querySelector('select[name="clase"]').addEventListener('change', function () {
+	formReserva.querySelector('input[name="horario"]').value = horariosPorClase[this.value] || '';
+});
+
 document.getElementById('btnNuevaReserva').addEventListener('click', function () {
 	formReserva.reset();
 	formReserva.querySelector('input[name="id"]').value = '';
