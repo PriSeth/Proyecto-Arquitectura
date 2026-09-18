@@ -2,7 +2,7 @@
 
 session_start();
 
-function responderJson(array $datos, int $codigo = 200): never
+function responderJson(array $datos, int $codigo = 200)
 {
     http_response_code($codigo);
     header('Content-Type: application/json; charset=utf-8');

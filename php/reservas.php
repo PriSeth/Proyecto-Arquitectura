@@ -45,19 +45,22 @@ if ($metodo === 'POST') {
             $buscarUsuario = $conexion->prepare('SELECT id_usuario FROM usuarios WHERE nombre = ? LIMIT 1');
             $buscarUsuario->bind_param('s', $_POST['cliente']);
             $buscarUsuario->execute();
-            $idUsuario = $buscarUsuario->get_result()->fetch_column();
+            $usuarioEncontrado = $buscarUsuario->get_result()->fetch_assoc();
+            $idUsuario = $usuarioEncontrado['id_usuario'] ?? null;
             $buscarUsuario->close();
         }
 
-        if (!$idClase && !empty($_POST['clase']) && !empty($_POST['horario'])) {
-            $buscarClase = $conexion->prepare(
-                'SELECT id_clase FROM clases WHERE nombre_clase = ? AND horario = ? LIMIT 1'
-            );
-            $buscarClase->bind_param('ss', $_POST['clase'], $_POST['horario']);
-            $buscarClase->execute();
-            $idClase = $buscarClase->get_result()->fetch_column();
-            $buscarClase->close();
-        }
+    }
+
+    if (!$idClase && !empty($_POST['clase']) && !empty($_POST['horario'])) {
+        $buscarClase = $conexion->prepare(
+            'SELECT id_clase FROM clases WHERE nombre_clase = ? AND horario = ? LIMIT 1'
+        );
+        $buscarClase->bind_param('ss', $_POST['clase'], $_POST['horario']);
+        $buscarClase->execute();
+        $claseEncontrada = $buscarClase->get_result()->fetch_assoc();
+        $idClase = $claseEncontrada['id_clase'] ?? null;
+        $buscarClase->close();
     }
 
     $fechaValida = DateTime::createFromFormat('Y-m-d', $fecha);

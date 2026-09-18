@@ -15,6 +15,14 @@ const modalTitulo = document.getElementById('modalReservaTitulo');
 const tablaSolicitudesBody = document.getElementById('tablaSolicitudesBody');
 const estadoVacioSolicitudes = document.getElementById('estadoVacioSolicitudes');
 const buscadorSolicitudes = document.getElementById('buscadorSolicitudes');
+const claseSeleccionada = new URLSearchParams(window.location.search).get('clase');
+
+function fechaHoy() {
+	const fecha = new Date();
+	const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+	const dia = String(fecha.getDate()).padStart(2, '0');
+	return `${fecha.getFullYear()}-${mes}-${dia}`;
+}
 
 function activarTab(nombre) {
 	const esSolicitudes = nombre === 'solicitudes';
@@ -128,6 +136,7 @@ formReserva.querySelector('select[name="clase"]').addEventListener('change', fun
 document.getElementById('btnNuevaReserva').addEventListener('click', function () {
 	formReserva.reset();
 	formReserva.querySelector('input[name="id"]').value = '';
+	formReserva.querySelector('input[name="fecha"]').value = fechaHoy();
 	if (!esAdmin && usuarioSesion) {
 		const campoCliente = formReserva.querySelector('input[name="cliente"]');
 		campoCliente.value = usuarioSesion.nombre;
@@ -136,6 +145,29 @@ document.getElementById('btnNuevaReserva').addEventListener('click', function ()
 	modalTitulo.textContent = 'Nueva reserva';
 	modalReserva.modal('show');
 });
+
+async function cargarClaseSeleccionada() {
+	if (!claseSeleccionada) return;
+
+	const respuesta = await fetch(`php/clases_disponibles.php?fecha=${fechaHoy()}`);
+	const resultado = await respuesta.json();
+	if (!respuesta.ok || !resultado.ok) return;
+
+	const clase = resultado.clases.find(item => String(item.id_clase) === claseSeleccionada);
+	if (!clase) return;
+
+	formReserva.reset();
+	formReserva.querySelector('input[name="fecha"]').value = fechaHoy();
+	formReserva.querySelector('select[name="clase"]').value = clase.nombre_clase;
+	formReserva.querySelector('input[name="horario"]').value = clase.horario;
+	if (!esAdmin && usuarioSesion) {
+		const campoCliente = formReserva.querySelector('input[name="cliente"]');
+		campoCliente.value = usuarioSesion.nombre;
+		campoCliente.readOnly = true;
+	}
+	modalTitulo.textContent = 'Nueva reserva';
+	modalReserva.modal('show');
+}
 
 tablaBody.addEventListener('click', async function (event) {
 	const btnEditar = event.target.closest('.btn-icon.edit');
@@ -220,6 +252,7 @@ async function cargarUsuario() {
 
 cargarUsuario()
 	.then(cargarReservas)
+	.then(cargarClaseSeleccionada)
 	.catch(function (error) {
 		alert(error.message);
 	});
