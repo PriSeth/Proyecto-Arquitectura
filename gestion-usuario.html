@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a class="site-brand" href="inicio.html" aria-label="Ir al inicio">
+            <i class="fa fa-diamond" aria-hidden="true"></i>
+            <span>Mi gimnasio</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación principal">
+            <a href="inicio.html">Inicio</a>
+            <a href="admin-reservas.html">Reservar</a>
+            <a href="#buscar">Buscar</a>
+            <a href="calculadora.html">Calculadora</a>
+			<a href="lista-Usuarios.html">Usuarios</a>
+        </nav>
+
+        <div class="site-user">
+            <a class="opiniones-link" href="opinion.html">
+                <i class="fa fa-commenting-o" aria-hidden="true"></i> Opine aquí
+            </a>
+            <button type="button" class="site-user-toggle" id="userMenuToggle" aria-expanded="false"
+                aria-controls="userMenu">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                <span id="nombreUsuario">Cargando...</span>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="user-menu" id="userMenu" hidden>
+                <a href="index.html" id="logoutLink"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-wrapper">
+        <section class="admin-content">
+            <div class="admin-panel active">
+                <span class="admin-title">Gestión</span>
+
+                <div class="admin-toolbar">
+                    <div class="search-wrap">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <input type="text" id="buscarRut" class="search-input" placeholder="Buscar RUT: __.___.___-_"
+                            maxlength="12">
+                    </div>
+                </div>
+
+                <div class="admin-toolbar" id="botonesGestion" hidden>
+                    <button type="button" id="btnModificar" class="btn-admin-primary">Modificar</button>
+                    <button type="button" id="btnEliminar" class="btn-admin-primary">Eliminar</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="container-login100 calculator-page" id="seccionCampos" hidden>
+            <div class="wrap-login100 wrap-register100">
+                <form id="formGestionUsuario" class="register100-form">
+                    <input type="hidden" id="idUsuario">
+                    <input type="hidden" id="campoRut">
+
+                    <div class="register-form-grid">
+                        <div class="wrap-input100">
+                            <input type="text" id="campoUsuario" class="input100" placeholder="Usuario">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100"><i class="fa fa-user" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="wrap-input100">
+                            <input type="text" id="campoNombre" class="input100" placeholder="Nombre Completo">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100"><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="wrap-input100">
+                            <input type="password" id="campoContrasena" class="input100"
+                                placeholder="Contraseña (dejar vacío para no cambiar)">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="wrap-input100">
+                            <select id="campoRol" class="input100" style="padding-left:68px;">
+                                <option value="cliente">cliente</option>
+                                <option value="admin">admin</option>
+                            </select>
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="wrap-input100">
+                            <input type="text" id="campoTelefono" class="input100" placeholder="Teléfono">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="wrap-input100">
+                            <input type="email" id="campoCorreo" class="input100" placeholder="Correo">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="container-login100-form-btn register-form-actions">
+                        <button type="submit" class="login100-form-btn" id="btnGuardarCambios">Guardar
+                            cambios</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/site-header.js?v=2"></script>
+    <script src="js/gestion.js"></script>
+</body>
+
+</html>
