@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Mi gimnasio - Panel del socio</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body class="dashboard-page">
+	<header class="site-header">
+		<a class="site-brand" href="inicio.html" aria-label="Ir al inicio">
+			<i class="fa fa-diamond" aria-hidden="true"></i>
+			<span>Mi gimnasio</span>
+		</a>
+
+		<nav class="site-nav" aria-label="Navegación principal">
+			<a href="inicio.html">Inicio</a>
+			<a href="admin-reservas.html">Reservar</a>
+			<a class="active" href="view.html">Mi perfil</a>
+			<a href="calculadora.html">Calculadora</a>
+		</nav>
+
+		<div class="site-user">
+			<a class="opiniones-link" href="opinion.html">
+				<i class="fa fa-commenting-o" aria-hidden="true"></i> Opine aquí
+			</a>
+			<button type="button" class="site-user-toggle" id="userMenuToggle" aria-expanded="false" aria-controls="userMenu">
+				<i class="fa fa-user-circle" aria-hidden="true"></i>
+				<span id="nombreUsuario">Cargando...</span>
+				<i class="fa fa-chevron-down" aria-hidden="true"></i>
+			</button>
+			<div class="user-menu" id="userMenu" hidden>
+				<a href="index.html" id="logoutLink"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión</a>
+			</div>
+		</div>
+	</header>
+
+	<main class="dashboard-wrapper">
+		<section class="dashboard-heading" aria-labelledby="dashboardTitle">
+			<div>
+				<span class="dashboard-eyebrow">Portal del socio</span>
+				<h1 id="dashboardTitle">Gimnasio Fitlife</h1>
+			</div>
+			<a class="dashboard-primary-button" href="admin-reservas.html">
+				<i class="fa fa-calendar" aria-hidden="true"></i> Reservar una clase
+			</a>
+		</section>
+
+		<section class="dashboard-grid" aria-label="Resumen de tu actividad">
+			<article class="dashboard-card next-class-card">
+				<div class="card-heading">
+					<h2>Mi próxima clase</h2>
+					<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+				</div>
+				<div id="nextClass" class="card-empty">Aún no tienes clases reservadas.</div>
+			</article>
+
+			<article class="dashboard-card">
+				<div class="card-heading">
+					<h2>Mis reservas</h2>
+					<a href="admin-reservas.html">Ver todas</a>
+				</div>
+				<div id="reservationSummary" class="card-empty">Cargando tus reservas...</div>
+			</article>
+
+			<article class="dashboard-card available-card">
+				<div class="card-heading">
+					<h2>Clases disponibles hoy</h2>
+					<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+				</div>
+				<ul id="availableClasses" class="class-list">
+					<li class="card-empty">Cargando clases...</li>
+				</ul>
+			</article>
+
+			<article class="dashboard-card membership-card">
+				<div class="card-heading">
+					<h2>Estado de membresía</h2>
+					<i class="fa fa-star-o" aria-hidden="true"></i>
+				</div>
+				<div class="membership-status"><i class="fa fa-clock-o" aria-hidden="true"></i> Próximamente</div>
+				<strong>Gestiona tu membresía</strong>
+				<p>Muy pronto podrás consultar y administrar tu plan desde este espacio.</p>
+			</article>
+
+			<article class="dashboard-card progress-card">
+				<div class="card-heading">
+					<h2>Mi progreso</h2>
+					<i class="fa fa-bar-chart" aria-hidden="true"></i>
+				</div>
+				<div class="progress-layout">
+					<div class="progress-ring"><span>78%</span></div>
+					<dl>
+						<div><dt>Sesiones semanales</dt><dd>4 de 5</dd></div>
+						<div><dt>Peso</dt><dd>78 kg</dd></div>
+						<div><dt>Grasa corporal</dt><dd>16%</dd></div>
+					</dl>
+				</div>
+				<a class="card-link" href="calculadora.html">Ver detalle</a>
+			</article>
+
+		</section>
+	</main>
+
+	<script src="js/site-header.js?v=2"></script>
+	<script src="js/view.js"></script>
+</body>
+</html>
