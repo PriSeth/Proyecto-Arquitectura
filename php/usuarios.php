@@ -9,17 +9,22 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 if ($metodo === 'GET'){
     $idFiltro = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+    $rutFiltro = trim($_GET['rut'] ?? '');
 
     $sql = 'SELECT id_usuario, nombre, rut, correo, usuario, telefono, rol, fecha_registro
             FROM usuarios';
     if ($idFiltro) {
         $sql .= ' WHERE id_usuario = ?';
+    } elseif ($rutFiltro !== '') {
+        $sql .= ' WHERE rut = ?';
     }
     $sql .= ' ORDER BY nombre';
 
     $consulta = $conexion->prepare($sql);
     if ($idFiltro) {
         $consulta->bind_param('i', $idFiltro);
+    } elseif ($rutFiltro !== '') {
+        $consulta->bind_param('s', $rutFiltro);
     }
     $consulta->execute();
     $usuarios = $consulta->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -42,7 +47,7 @@ if ($metodo === 'PUT') {
     $contrasena = $datos['contrasena'] ?? '';
 
     if (!$idUsuario || $nombre === '' || $rut === ''
-        || !filter_var($correo, FILTER_VALIDATE_EMAIL)
+        || !preg_match('/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $correo)
         || !preg_match('/^[A-Za-z0-9_]{3,10}$/', $usuario)
         || !preg_match('/^9[0-9]{8}$/', $telefono)
         || !in_array($rol, ['cliente', 'admin'], true)) {
@@ -71,10 +76,11 @@ if ($metodo === 'PUT') {
     }
 
     if (!$consulta->execute()) {
+        $errno = $conexion->errno;
         $consulta->close();
         $conexion->close();
 
-        if ($conexion->errno === 1062) {
+        if ($errno === 1062) {
             responderJson(['ok' => false, 'mensaje' => 'El RUT, correo o usuario ya está en uso por otro usuario.'], 409);
         }
 
@@ -86,6 +92,37 @@ if ($metodo === 'PUT') {
     $conexion->close();
 
     responderJson(['ok' => true, 'actualizados' => $actualizados]);
+}
+
+if ($metodo === 'DELETE') {
+    exigirAdmin();
+    parse_str(file_get_contents('php://input'), $datos);
+    $idUsuario = filter_var($datos['id_usuario'] ?? null, FILTER_VALIDATE_INT);
+
+    if (!$idUsuario) {
+        responderJson(['ok' => false, 'mensaje' => 'Usuario inválido.'], 400);
+    }
+
+    $consulta = $conexion->prepare('DELETE FROM usuarios WHERE id_usuario = ?');
+    $consulta->bind_param('i', $idUsuario);
+
+    try {
+        $consulta->execute();
+        $eliminados = $consulta->affected_rows;
+        $consulta->close();
+        $conexion->close();
+
+        responderJson(['ok' => true, 'eliminados' => $eliminados]);
+    } catch (mysqli_sql_exception $error) {
+        $consulta->close();
+        $conexion->close();
+
+        if ($error->getCode() === 1451) {
+            responderJson(['ok' => false, 'mensaje' => 'No se puede eliminar: el usuario tiene reservas asociadas.'], 409);
+        }
+
+        responderJson(['ok' => false, 'mensaje' => 'No se pudo eliminar el usuario.'], 500);
+    }
 }
 
 responderJson(['ok' => false, 'mensaje' => 'Método no permitido.'], 405);
