@@ -16,7 +16,9 @@ fetch('php/usuario_actual.php')
 		}
 	})
 	.catch(function () {
-		if (window.location.pathname.endsWith('inicio.html') || window.location.pathname.endsWith('admin-reservas.html')) {
+		if (window.location.pathname.endsWith('inicio.html') ||
+			window.location.pathname.endsWith('admin-reservas.html') ||
+			window.location.pathname.endsWith('MiPerfil.html')) {
 			window.location.href = 'index.html';
 		}
 	});

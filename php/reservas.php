@@ -132,7 +132,6 @@ if ($metodo === 'POST') {
 }
 
 if ($metodo === 'PUT' || $metodo === 'DELETE') {
-    exigirAdmin();
     parse_str(file_get_contents('php://input'), $datos);
     $idReserva = filter_var($datos['id_reserva'] ?? null, FILTER_VALIDATE_INT);
 
@@ -149,12 +148,23 @@ if ($metodo === 'PUT' || $metodo === 'DELETE') {
         }
     }
 
-    $consulta = $conexion->prepare('UPDATE reservas SET estado = ? WHERE id_reserva = ?');
-    $consulta->bind_param('si', $estado, $idReserva);
+    $esAdmin = $usuarioActual['rol'] === 'admin';
+    if ($esAdmin) {
+        $consulta = $conexion->prepare('UPDATE reservas SET estado = ? WHERE id_reserva = ?');
+        $consulta->bind_param('si', $estado, $idReserva);
+    } else {
+        $consulta = $conexion->prepare('UPDATE reservas SET estado = ? WHERE id_reserva = ? AND id_usuario = ?');
+        $consulta->bind_param('sii', $estado, $idReserva, $usuarioActual['id_usuario']);
+    }
+
     $consulta->execute();
     $actualizadas = $consulta->affected_rows;
     $consulta->close();
     $conexion->close();
+
+    if ($actualizadas === 0) {
+        responderJson(['ok' => false, 'mensaje' => 'La reserva no existe o no te pertenece.'], 404);
+    }
 
     responderJson(['ok' => true, 'actualizadas' => $actualizadas]);
 }
