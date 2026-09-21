@@ -42,33 +42,46 @@ body, html {
 .project-footer {
   position: relative;
   width: 100%;
-  padding: 8px 15px;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(250px, 1fr) minmax(220px, 1fr);
+  align-items: center;
+  gap: 24px;
+  padding: 14px 32px;
+  min-height: 112px;
   background: #fff;
   box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.18);
   color: #000;
   font-family: Poppins-Regular, sans-serif;
   font-size: 12px;
   line-height: 1.4;
-  text-align: center;
+  text-align: left;
 }
 
 .footer-credit {
-  display: block;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: #555;
+}
+
+.footer-credit strong,
+.footer-contacts strong {
+  color: #000;
+  font-family: Poppins-Bold, sans-serif;
+  font-size: 13px;
 }
 
 .footer-contacts {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 3px auto 6px;
-  max-width: 700px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
 }
 
 .footer-contact {
-  flex: 1;
   color: #555;
-  text-align: center;
+  font-size: 12px;
+  text-align: left;
 }
 
 .footer-contact:hover {
@@ -80,6 +93,7 @@ body, html {
   justify-content: center;
   align-items: center;
   gap: 16px;
+  min-height: 76px;
 }
 
 .footer-socials .map-icon {
@@ -89,17 +103,6 @@ body, html {
 
 .footer-socials .map-icon:hover {
   transform: scale(1.08);
-}
-
-.project-footer .map-icon {
-  position: absolute;
-  top: 50%;
-  right: 24px;
-  transform: translateY(-50%);
-}
-
-.project-footer .map-icon:hover {
-  transform: translateY(-50%) scale(1.08);
 }
 
 /*---------------------------------------------*/
@@ -656,9 +659,20 @@ iframe {
 }
 
 @media (max-width: 600px) {
+  .project-footer {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .footer-credit,
   .footer-contacts {
-    flex-direction: column;
-    gap: 2px;
+    align-items: center;
+  }
+
+  .footer-contact {
+    text-align: center;
   }
 
   .footer-socials {
