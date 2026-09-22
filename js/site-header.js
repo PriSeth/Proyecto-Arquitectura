@@ -1,6 +1,12 @@
 const userMenuToggle = document.getElementById('userMenuToggle');
 const userMenu = document.getElementById('userMenu');
 const logoutLink = document.getElementById('logoutLink');
+const enlacesAdministracion = document.querySelectorAll('a[href="lista-Usuarios.html"], a[href="gestion-usuario.html"]');
+
+enlacesAdministracion.forEach(function (enlace) {
+	enlace.hidden = true;
+	enlace.style.display = 'none';
+});
 
 fetch('php/usuario_actual.php')
 	.then(function (respuesta) {
@@ -14,11 +20,31 @@ fetch('php/usuario_actual.php')
 		if (nombreUsuario) {
 			nombreUsuario.textContent = resultado.usuario.usuario;
 		}
+
+		const esAdmin = resultado.usuario.rol === 'admin';
+		enlacesAdministracion.forEach(function (enlace) {
+			enlace.hidden = !esAdmin;
+				enlace.style.display = esAdmin ? '' : 'none';
+		});
+
+		const paginaActual = window.location.pathname.split('/').pop();
+		if (!esAdmin && (paginaActual === 'lista-Usuarios.html' || paginaActual === 'gestion-usuario.html')) {
+			window.location.href = 'inicio.html';
+		}
 	})
 	.catch(function () {
+		if (enlacesAdministracion.length) {
+			enlacesAdministracion.forEach(function (enlace) {
+				enlace.hidden = true;
+				enlace.style.display = 'none';
+			});
+		}
+
 		if (window.location.pathname.endsWith('inicio.html') ||
 			window.location.pathname.endsWith('admin-reservas.html') ||
-			window.location.pathname.endsWith('MiPerfil.html')) {
+			window.location.pathname.endsWith('MiPerfil.html') ||
+			window.location.pathname.endsWith('lista-Usuarios.html') ||
+			window.location.pathname.endsWith('gestion-usuario.html')) {
 			window.location.href = 'index.html';
 		}
 	});

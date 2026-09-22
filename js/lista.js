@@ -41,6 +41,10 @@ function renderUsuarios(filtro = ''){
 async function cargarUsuarios() {
     const respuesta = await fetch('php/usuarios.php');
     const resultado = await respuesta.json();
+    if (respuesta.status === 403) {
+        window.location.href = 'inicio.html';
+        return;
+    }
     if (!respuesta.ok  || !resultado.ok){
         throw new Error(resultado.mensaje || 'No se pudieron cargar los usuarios.');
     }
