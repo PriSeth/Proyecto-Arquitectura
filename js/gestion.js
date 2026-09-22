@@ -2,6 +2,7 @@ const buscarRut = document.getElementById('buscarRut');
 const botonesGestion = document.getElementById('botonesGestion');
 const btnModificar = document.getElementById('btnModificar');
 const btnEliminar = document.getElementById('btnEliminar');
+const btnCancelarCambios = document.getElementById('btnCancelarCambios');
 const seccionCampos = document.getElementById('seccionCampos');
 
 const idUsuario = document.getElementById('idUsuario');
@@ -13,6 +14,7 @@ const campoRol = document.getElementById('campoRol');
 const campoTelefono = document.getElementById('campoTelefono');
 const campoCorreo = document.getElementById('campoCorreo');
 const formGestionUsuario = document.getElementById('formGestionUsuario');
+let datosOriginales = null;
 
 function estadoInicial() {
 	botonesGestion.hidden = true;
@@ -30,6 +32,7 @@ function limpiarFormulario() {
 	campoRol.value = 'cliente';
 	campoTelefono.value = '';
 	campoCorreo.value = '';
+	datosOriginales = null;
 
 	formGestionUsuario.querySelectorAll('.wrap-input100').forEach(function (contenedor) {
 		contenedor.classList.remove('alert-validate');
@@ -151,6 +154,15 @@ async function buscarUsuarioPorRut() {
 	campoRol.value = u.rol;
 	campoTelefono.value = u.telefono;
 	campoCorreo.value = u.correo;
+	datosOriginales = {
+		idUsuario: u.id_usuario,
+		rut: u.rut,
+		usuario: u.usuario,
+		nombre: u.nombre,
+		rol: u.rol,
+		telefono: u.telefono,
+		correo: u.correo
+	};
 
 	seccionCampos.hidden = true;
 	botonesGestion.hidden = false;
@@ -176,6 +188,13 @@ btnModificar.addEventListener('click', function () {
 	btnEliminar.hidden = true;
 	seccionCampos.hidden = false;
 	camposConTicket.forEach(validarCampo);
+});
+
+btnCancelarCambios.addEventListener('click', function () {
+	buscarRut.value = '';
+	limpiarFormulario();
+	estadoInicial();
+	buscarRut.focus();
 });
 
 btnEliminar.addEventListener('click', async function () {
