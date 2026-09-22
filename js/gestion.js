@@ -65,6 +65,7 @@ campoTelefono.addEventListener('input', function () {
 	if (this.selectionStart < 1) {
 		this.setSelectionRange(1, 1);
 	}
+
 });
 
 campoCorreo.addEventListener('input', function () {
@@ -90,7 +91,10 @@ function validarCampo(campo) {
 	} else if (campo === campoContrasena) {
 		campo.setCustomValidity(contrasenaEsValida(campo.value) ? '' : 'La contraseña debe tener entre 4 y 8 caracteres, sin espacios');
 	} else {
-		campo.setCustomValidity(campo.checkValidity() ? '' : (contenedor.dataset.validate || 'Dato inválido'));
+		campo.setCustomValidity('');
+		if (!campo.checkValidity()) {
+			campo.setCustomValidity(contenedor.dataset.validate || 'Dato inválido');
+		}
 	}
 
 	const campoValido = campo.checkValidity();
