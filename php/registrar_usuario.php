@@ -35,12 +35,13 @@ if (!$consulta) {
 
 $consulta->bind_param('ssssss', $nombre, $rut, $correo, $usuario, $hash, $telefono);
 
-if (!$consulta->execute()) {
-    if ($conexion->errno === 1062) {
+try {
+    $consulta->execute();
+} catch (mysqli_sql_exception $e) {
+    if ($e->getCode() === 1062) {
         http_response_code(409);
         exit('El RUT, correo o usuario ya está registrado.');
     }
-
     http_response_code(500);
     exit('No se pudo guardar el usuario.');
 }
