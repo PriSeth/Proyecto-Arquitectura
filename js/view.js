@@ -58,9 +58,9 @@ async function confirmarReserva(idReserva) {
 
 async function cancelarReserva(idReserva) {
 	const respuesta = await fetch('php/reservas.php', {
-		method: 'DELETE',
+		method: 'PUT',
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-		body: new URLSearchParams({ id_reserva: idReserva })
+		body: new URLSearchParams({ id_reserva: idReserva, estado: 'Cancelada' })
 	});
 	const resultado = await respuesta.json();
 	if (!respuesta.ok || !resultado.ok) {

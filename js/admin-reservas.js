@@ -121,6 +121,17 @@ async function cambiarEstado(idReserva, estado) {
 	await cargarReservas();
 }
 
+async function eliminarReserva(idReserva) {
+	const respuesta = await fetch('php/reservas.php', {
+		method: 'DELETE',
+		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+		body: new URLSearchParams({ id_reserva: idReserva })
+	});
+	const resultado = await respuesta.json();
+	if (!respuesta.ok || !resultado.ok) throw new Error(resultado.mensaje || 'No se pudo eliminar la reserva.');
+	await cargarReservas();
+}
+
 const horariosPorClase = {
 	Zumba: '08:30',
 	Spinning: '09:30',
@@ -185,8 +196,8 @@ tablaBody.addEventListener('click', async function (event) {
 			}
 		}
 
-		if (btnEliminar && confirm('¿Cancelar esta reserva?')) {
-			await cambiarEstado(id, 'Cancelada');
+		if (btnEliminar && confirm('¿Eliminar definitivamente esta reserva?')) {
+			await eliminarReserva(id);
 		}
 	} catch (error) {
 		alert(error.message);

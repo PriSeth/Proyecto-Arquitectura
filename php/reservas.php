@@ -139,6 +139,21 @@ if ($metodo === 'PUT' || $metodo === 'DELETE') {
         responderJson(['ok' => false, 'mensaje' => 'Reserva inválida.'], 400);
     }
 
+    if ($metodo === 'DELETE' && $usuarioActual['rol'] === 'admin') {
+        $consulta = $conexion->prepare('DELETE FROM reservas WHERE id_reserva = ?');
+        $consulta->bind_param('i', $idReserva);
+        $consulta->execute();
+        $eliminadas = $consulta->affected_rows;
+        $consulta->close();
+        $conexion->close();
+
+        if ($eliminadas === 0) {
+            responderJson(['ok' => false, 'mensaje' => 'La reserva no existe.'], 404);
+        }
+
+        responderJson(['ok' => true, 'eliminadas' => $eliminadas]);
+    }
+
     if ($metodo === 'DELETE') {
         $estado = 'Cancelada';
     } else {
