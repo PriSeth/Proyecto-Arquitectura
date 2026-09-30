@@ -184,6 +184,35 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="modalEstadoReserva" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form id="formEstadoReserva">
+					<div class="modal-header">
+						<h5 class="modal-title">Cambiar estado de la reserva</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group mb-0">
+							<label for="estadoReserva">Estado</label>
+							<select id="estadoReserva" class="form-control" required>
+								<option value="Confirmada">Confirmada</option>
+								<option value="Pendiente">Pendiente</option>
+								<option value="Cancelada">Cancelada</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn-admin-primary">Guardar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<footer class="project-footer">
 		<div class="footer-credit">
 			<strong>Autores:</strong>
@@ -220,7 +249,7 @@
 	<script src="vendor/select2/select2.min.js"></script>
 
 	<script src="js/site-header.js?v=3"></script>
-	<script src="js/admin-reservas.js?v=2"></script>
+	<script src="js/admin-reservas.js?v=3"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

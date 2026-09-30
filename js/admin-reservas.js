@@ -12,6 +12,9 @@ const buscador = document.getElementById('buscador');
 const formReserva = document.getElementById('formReserva');
 const modalReserva = $('#modalReserva');
 const modalTitulo = document.getElementById('modalReservaTitulo');
+const modalEstadoReserva = $('#modalEstadoReserva');
+const formEstadoReserva = document.getElementById('formEstadoReserva');
+const campoEstadoReserva = document.getElementById('estadoReserva');
 const tablaSolicitudesBody = document.getElementById('tablaSolicitudesBody');
 const estadoVacioSolicitudes = document.getElementById('estadoVacioSolicitudes');
 const buscadorSolicitudes = document.getElementById('buscadorSolicitudes');
@@ -190,15 +193,33 @@ tablaBody.addEventListener('click', async function (event) {
 		if (btnEditar) {
 			const reserva = reservas.find(item => String(item.id_reserva) === id);
 			if (!reserva) return;
-			const nuevoEstado = prompt('Estado: Confirmada, Pendiente o Cancelada', reserva.estado);
-			if (nuevoEstado && ['Confirmada', 'Pendiente', 'Cancelada'].includes(nuevoEstado)) {
-				await cambiarEstado(id, nuevoEstado);
-			}
+			formEstadoReserva.dataset.idReserva = id;
+			campoEstadoReserva.value = reserva.estado;
+			modalEstadoReserva.modal('show');
 		}
 
 		if (btnEliminar && confirm('¿Eliminar definitivamente esta reserva?')) {
 			await eliminarReserva(id);
 		}
+	} catch (error) {
+		alert(error.message);
+	}
+});
+
+formEstadoReserva.addEventListener('submit', async function (event) {
+	event.preventDefault();
+	const id = this.dataset.idReserva;
+	const reserva = reservas.find(item => String(item.id_reserva) === id);
+	if (!id || !reserva) return;
+
+	if (campoEstadoReserva.value === reserva.estado) {
+		modalEstadoReserva.modal('hide');
+		return;
+	}
+
+	try {
+		await cambiarEstado(id, campoEstadoReserva.value);
+		modalEstadoReserva.modal('hide');
 	} catch (error) {
 		alert(error.message);
 	}
