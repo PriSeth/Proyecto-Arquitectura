@@ -18,7 +18,7 @@ if ($metodo === 'GET'){
     } elseif ($rutFiltro !== '') {
         $sql .= ' WHERE rut = ?';
     }
-    $sql .= ' ORDER BY nombre';
+    $sql .= ' ORDER BY id_usuario DESC';
 
     $consulta = $conexion->prepare($sql);
     if ($idFiltro) {

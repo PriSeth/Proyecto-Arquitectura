@@ -19,7 +19,7 @@ if ($metodo === 'GET') {
         $sql .= ' WHERE r.id_usuario = ?';
     }
 
-    $sql .= ' ORDER BY r.fecha DESC, c.horario';
+    $sql .= ' ORDER BY r.fecha_reserva DESC';
     $consulta = $conexion->prepare($sql);
 
     if (!$esAdmin) {

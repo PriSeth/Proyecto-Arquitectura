@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Recuperar contraseña</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="images/fitlifefavicon.png">
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+
+<body>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="images/fitlife.png" alt="IMG">
+                </div>
+
+                <form id="recuperarForm" class="login100-form validate-form" novalidate>
+                    <span class="login100-form-title">
+                        Recuperar contraseña
+                    </span>
+
+                    <p class="txt1 text-center p-b-20">
+                        Escribe el correo con el que te registraste y te enviaremos un código.
+                    </p>
+
+                    <div class="wrap-input100 validate-input" data-validate="Ingresar correo válido: ejemplo@abc.xyz">
+                        <input class="input100" type="email" id="rCorreo" name="correo" placeholder="Correo" required
+                            pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" autocomplete="email">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                        <span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+                        <i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Código de 6 dígitos">
+                        <input class="input100" type="text" id="rCodigo" placeholder="Código de 6 dígitos" maxlength="6"
+                            inputmode="numeric" autocomplete="one-time-code" disabled>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                        </span>
+                        <span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+                        <i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Entre 4 y 8 caracteres, sin espacios">
+                        <input class="input100" type="password" id="rNueva" placeholder="Nueva contraseña" maxlength="8"
+                            autocomplete="new-password" disabled>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                        <span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+                        <i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Las contraseñas no coinciden">
+                        <input class="input100" type="password" id="rConfirmar" placeholder="Confirmar contraseña"
+                            maxlength="8" autocomplete="new-password" disabled>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                        <span class="validation-icon" aria-label="Ver mensaje de error" role="img">&#xf06a;</span>
+                        <i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido" role="img"></i>
+                    </div>
+
+                    <p id="estadoRecuperar" class="estado-codigo" role="status" aria-live="polite"></p>
+
+                    <div class="container-login100-form-btn">
+                        <button id="btnRecuperar" class="login100-form-btn" type="button">
+                            Enviar código
+                        </button>
+                    </div>
+
+                    <div class="text-center p-t-136">
+                        <a class="txt2" href="index.html">
+                            <i class="fa fa-long-arrow-left m-r-5" aria-hidden="true"></i>
+                            Volver a iniciar sesión
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="project-footer">
+        <div class="footer-credit">
+            <strong>Autores:</strong>
+            <span>Luis Garcia</span>
+            <span>Mia Martinez</span>
+            <span>Diego Vargas</span>
+        </div>
+        <div class="footer-contacts">
+            <strong>Contacto:</strong>
+            <a class="footer-contact" href="tel:+56966924087">Telefono: +56 9 6692 4087</a>
+            <a class="footer-contact" href="mailto:diegoignaciodiego44@gmail.com">Correo:
+                diegoignaciodiego44@gmail.com</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://www.instagram.com/aiep_rancagua/" target="_blank" rel="noopener noreferrer"
+                class="instagram-btn">
+                <img src="images/Instagram-Logo.png" alt="Síguenos en Instagram">
+            </a>
+            <a href="https://www.facebook.com/aiep.rancagua" target="_blank" rel="noopener noreferrer"
+                class="Facebook-btn">
+                <img src="images/Facebook-Logo.png" alt="Contactanos por Facebook">
+            </a>
+            <a href="https://x.com/AIEP" target="_blank" rel="noopener noreferrer" class="twitter-btn">
+                <img src="images/Twitter-Logo.png" alt="Síguenos en Twitter">
+            </a>
+            <a class="map-icon" href="https://www.google.com/maps/search/?api=1&query=AIEP%20Rancagua" target="_blank"
+                rel="noopener noreferrer" title="Ver ubicación en Google Maps"
+                aria-label="Ver ubicación en Google Maps">
+                <svg viewBox="0 0 24 24" fill="#EA4335" aria-hidden="true">
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <script src="js/site-header.js"></script>
+    <script src="js/recuperar.js"></script>
+
+</body>
+
+</html>

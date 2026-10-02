@@ -41,7 +41,7 @@ try {
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username = 'fitlifegym606@gmail.com';
-    $mail->Password = 'itco eabe domm ukkl';
+    $mail->Password = 'vizi fdld qzpz zilh';
     $mail->setFrom('micuenta@gmail.com', 'FitLife');
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
