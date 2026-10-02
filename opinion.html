@@ -27,6 +27,7 @@
       <a href="calculadora.html">Calculadora</a>
       <a href="lista-Usuarios.html">Usuarios</a>
       <a href="gestion-usuario.html">Gestión</a>
+      <a href="grafico.html">Gráfico</a>
     </nav>
 		<div class="site-user">
       <a class="opiniones-link" href="opinion.html" aria-current="page">
@@ -57,8 +58,8 @@
           <label class="feedback-label">Calificación
             <select name="calificacion" required class="feedback-input">
               <option value="5">5 - Excelente</option>
-              <option value="4">4 - Bueno</option>
-              <option value="3">3 - Aceptable</option>
+              <option value="4">4 - Muy bueno</option>
+              <option value="3">3 - Bueno</option>
               <option value="2">2 - Malo</option>
               <option value="1">1 - Muy malo</option>
             </select>
@@ -73,6 +74,25 @@
       </div>
     </div>
   </div>
+
+  <section class="reviews-section" aria-labelledby="reviewsTitle">
+    <div class="reviews-heading">
+      <div>
+        <span class="graph-eyebrow">Comunidad Fitlife</span>
+        <h2 id="reviewsTitle">Opiniones de nuestros socios</h2>
+        <p>Calificaciones y comentarios compartidos por la comunidad.</p>
+      </div>
+      <div class="reviews-reputation" aria-live="polite">
+        <strong id="opinionPromedio">--</strong>
+        <span id="opinionEstrellas" aria-label="Reputación sobre 5 estrellas">☆☆☆☆☆</span>
+        <small><span id="opinionesTotal">0</span> calificaciones</small>
+      </div>
+    </div>
+    <div id="opinionesAleatorias" class="reviews-list" aria-live="polite">
+      <p class="reviews-empty">Cargando opiniones...</p>
+    </div>
+    <p class="graph-error" id="errorOpiniones" role="alert" hidden></p>
+  </section>
 
   <footer class="project-footer">
     <div class="footer-credit">
@@ -105,5 +125,6 @@
   </footer>
 
   <script src="js/site-header.js?v=4"></script>
+  <script src="js/opinion.js"></script>
 </body>
 </html>

@@ -48,6 +48,7 @@ fetch('php/usuario_actual.php')
 		if (window.location.pathname.endsWith('inicio.html') ||
 			window.location.pathname.endsWith('opinion.html') ||
 			window.location.pathname.endsWith('admin-reservas.html') ||
+			window.location.pathname.endsWith('grafico.html') ||
 			window.location.pathname.endsWith('MiPerfil.html') ||
 			window.location.pathname.endsWith('lista-Usuarios.html') ||
 			window.location.pathname.endsWith('gestion-usuario.html')) {

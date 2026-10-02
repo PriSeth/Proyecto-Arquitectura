@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-	
-<meta charset="UTF-8">
+<head>
+	<title>Gráfico de reservas - Fitlife</title>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="images/fitlifefavicon.png">
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-
 </head>
 <body>
-
 	<header class="site-header">
 		<a class="site-brand" href="inicio.html" aria-label="Ir al inicio">
 			<i class="fa fa-diamond" aria-hidden="true"></i>
@@ -28,7 +24,7 @@
 			<a href="calculadora.html">Calculadora</a>
 			<a href="lista-Usuarios.html">Usuarios</a>
 			<a href="gestion-usuario.html">Gestión</a>
-			<a href="grafico.html">Gráfico</a>
+			<a href="grafico.html" class="active" aria-current="page">Gráfico</a>
 		</nav>
 
 		<div class="site-user">
@@ -46,40 +42,40 @@
 		</div>
 	</header>
 
-<main class="admin-wrapper">
-		<div class="admin-content">
-			<div class="admin-panel active">
-				<span class="admin-title">Usuarios registrados</span>
-
-				<div class="admin-toolbar">
-					<div class="search-wrap">
-						<i class="fa fa-search"></i>
-						<input type="text" id="buscadorUsuarios" class="search-input" placeholder="Buscar por nombre, RUT o usuario...">
-					</div>
+	<main class="graph-content">
+		<section aria-labelledby="graphTitle">
+			<div class="graph-heading">
+				<div>
+					<span class="graph-eyebrow">Fitlife / Comunidad</span>
+					<h1 id="graphTitle">Reputación Fitlife</h1>
+					<p id="graphDescription">Calificaciones y opiniones de nuestros socios.</p>
 				</div>
-
-				<div class="table-responsive">
-					<table class="table table-bordered table-reservas">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Nombre</th>
-								<th>RUT</th>
-								<th>Correo</th>
-								<th>Usuario</th>
-								<th>Teléfono</th>
-								<th>Rol</th>
-								<th>Registrado</th>
-							</tr>
-						</thead>
-						<tbody id="tablaUsuariosBody"></tbody>
-					</table>
-					<div id="estadoVacioUsuarios" class="empty-state">
-						No hay usuarios registrados.
-					</div>
-				</div>
+				<button type="button" class="graph-refresh" id="actualizarGrafico" aria-label="Actualizar gráfico" title="Actualizar gráfico">
+					<i class="fa fa-refresh" aria-hidden="true"></i>
+				</button>
 			</div>
-		</div>
+
+			<div class="graph-kpis" aria-live="polite">
+				<div class="graph-kpi"><span>Total de calificaciones</span><strong id="totalOpiniones">0</strong></div>
+				<div class="graph-kpi"><span>Reputación promedio</span><strong id="promedioOpiniones">0.0 / 5</strong></div>
+				<div class="graph-kpi"><span>Estrellas promedio</span><strong class="pie-average-stars" id="estrellasPromedio">☆☆☆☆☆</strong></div>
+			</div>
+
+			<div class="graph-grid">
+				<section class="graph-panel" aria-labelledby="calificacionesTitulo">
+					<h2 id="calificacionesTitulo">Distribución de calificaciones</h2>
+					<p>Proporción de las opiniones recibidas, de 1 a 5 estrellas.</p>
+					<div id="graficoTorta" aria-live="polite"></div>
+					<p class="graph-empty" id="sinOpiniones" hidden>Aún no hay calificaciones para mostrar.</p>
+				</section>
+				<section class="graph-panel" aria-labelledby="leyendaTitulo">
+					<h2 id="leyendaTitulo">Calificaciones</h2>
+					<p>Cantidad y porcentaje por nivel de estrellas.</p>
+					<ul class="rating-legend" id="leyendaCalificaciones" aria-live="polite"></ul>
+				</section>
+			</div>
+			<p class="graph-error" id="errorGrafico" role="alert" hidden></p>
+		</section>
 	</main>
 
 	<footer class="project-footer">
@@ -112,11 +108,7 @@
 		</div>
 	</footer>
 
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-
-	<script src="js/site-header.js?v=3"></script>
-	<script src="js/lista.js"></script>
+	<script src="js/site-header.js?v=5"></script>
+	<script src="js/grafico.js"></script>
 </body>
 </html>
