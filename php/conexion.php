@@ -1,10 +1,10 @@
 <?php
 
-$servidor = "sql310.infinityfree.com";
+$servidor = "sql207.infinityfree.com";
 $puerto = 3306;
-$usuario = "if0_43072211";
-$contrasena = "PJbz6CVANiN";
-$base_datos = "if0_43072211_gimnasio";
+$usuario = "if0_43072385";
+$contrasena = "HPTPCA48KW";
+$base_datos = "if0_43072385_gimnasio";
 
 $conexion = new mysqli(
     $servidor,
