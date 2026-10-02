@@ -97,8 +97,13 @@
 							<i class="fa fa-check-circle validation-icon-success" aria-label="Campo válido"
 								role="img"></i>
 						</div>
+						<div class="wrap-input100">
+							<input class="input100" type="text" id="codigo" placeholder="Código de 6 dígitos" maxlength="6" inputmode="numeric" autocomplete="one-time-code" disabled>
+						</div>
+						<button type="button" id="btnCodigo" class="login100-form-btn register-secondary-btn">Enviar código</button>
+						<p id="estadoCodigo" class="estado-codigo" role="status" aria-live="polite"></p>
 					</div>
-
+				
 					<div class="container-login100-form-btn register-form-actions">
 						<button type="submit" class="login100-form-btn">
 							Registrar

@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/conexion.php';
+require_once __DIR__ . '/sesion.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -20,6 +21,11 @@ if ($nombre === '' || $rut === '' || !filter_var($correo, FILTER_VALIDATE_EMAIL)
     || !preg_match('/^9[0-9]{8}$/', $telefono)) {
     http_response_code(400);
     exit('Revisa los datos ingresados.');
+}
+
+if (($_SESSION['correo_verificado'] ?? '') !== $correo) {
+    http_response_code(403);
+    exit('Debes verificar tu correo.');
 }
 
 $hash = password_hash($contrasena, PASSWORD_DEFAULT);
@@ -45,6 +51,8 @@ try {
     http_response_code(500);
     exit('No se pudo guardar el usuario.');
 }
+
+unset($_SESSION['correo_verificado']);
 
 $consulta->close();
 $conexion->close();

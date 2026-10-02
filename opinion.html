@@ -49,13 +49,10 @@
         <form action="php/guardar_opinion.php" method="POST" class="feedback-form-content">
           <h2>Déjanos tu opinión</h2>
 
-          <label class="feedback-label">Nombre
-            <input type="text" name="nombre" class="feedback-input" placeholder="Tu nombre" required />
+          <label class="feedback-label">Nombre de Usuario
+            <input type="text" id="opinionNombre" class="feedback-input" value="Cargando..." readonly tabindex="-1" aria-readonly="true" />
           </label>
 
-          <label class="feedback-label">Correo Electrónico
-            <input type="email" name="correo" class="feedback-input" placeholder="tu@ejemplo.com" autocomplete="email" required title="Ingrese un correo electrónico válido" />
-          </label>
 
           <label class="feedback-label">Calificación
             <select name="calificacion" required class="feedback-input">
@@ -107,6 +104,6 @@
     </div>
   </footer>
 
-  <script src="js/site-header.js?v=3"></script>
+  <script src="js/site-header.js?v=4"></script>
 </body>
 </html>

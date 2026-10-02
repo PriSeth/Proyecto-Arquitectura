@@ -21,6 +21,11 @@ fetch('php/usuario_actual.php')
 			nombreUsuario.textContent = resultado.usuario.usuario;
 		}
 
+		const opinionNombre = document.getElementById('opinionNombre');
+		if (opinionNombre) {
+			opinionNombre.value = resultado.usuario.usuario;
+		}
+
 		const esAdmin = resultado.usuario.rol === 'admin';
 		enlacesAdministracion.forEach(function (enlace) {
 			enlace.hidden = !esAdmin;
@@ -41,6 +46,7 @@ fetch('php/usuario_actual.php')
 		}
 
 		if (window.location.pathname.endsWith('inicio.html') ||
+			window.location.pathname.endsWith('opinion.html') ||
 			window.location.pathname.endsWith('admin-reservas.html') ||
 			window.location.pathname.endsWith('MiPerfil.html') ||
 			window.location.pathname.endsWith('lista-Usuarios.html') ||
@@ -73,4 +79,3 @@ if (userMenuToggle && userMenu) {
 		}
 	});
 }
-
