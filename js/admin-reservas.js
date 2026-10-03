@@ -18,6 +18,8 @@ const campoEstadoReserva = document.getElementById('estadoReserva');
 const tablaSolicitudesBody = document.getElementById('tablaSolicitudesBody');
 const estadoVacioSolicitudes = document.getElementById('estadoVacioSolicitudes');
 const buscadorSolicitudes = document.getElementById('buscadorSolicitudes');
+const filtroClase = document.getElementById('filtroClase');
+const filtroEstado = document.getElementById('filtroEstado');
 const claseSeleccionada = new URLSearchParams(window.location.search).get('clase');
 
 function fechaHoy() {
@@ -55,35 +57,53 @@ async function cargarReservas() {
 	renderSolicitudes(buscadorSolicitudes.value);
 }
 
-function renderTabla(filtro = '') {
-	tablaBody.innerHTML = '';
-	const filtroLower = filtro.trim().toLowerCase();
-	const listaFiltrada = reservas.filter(function (reserva) {
-		return reserva.cliente.toLowerCase().includes(filtroLower) ||
-			reserva.clase.toLowerCase().includes(filtroLower);
-	});
+function renderTabla() {
+    tablaBody.innerHTML = '';
 
-	estadoVacio.style.display = listaFiltrada.length === 0 ? 'block' : 'none';
-	listaFiltrada.forEach(function (reserva) {
-		const fila = document.createElement('tr');
-		fila.innerHTML = `
-			<td>${reserva.id_reserva}</td>
-			<td>${reserva.cliente}</td>
-			<td>${reserva.clase}</td>
-			<td>${reserva.horario}</td>
-			<td>${reserva.fecha}</td>
-			<td><span class="badge-estado ${claseBadge(reserva.estado)}">${reserva.estado}</span></td>
-			<td class="acciones-reserva" ${esAdmin ? '' : 'hidden'}>
-				<button type="button" class="btn-icon edit" title="Cambiar estado" data-id="${reserva.id_reserva}">
-					<i class="fa fa-pencil"></i>
-				</button>
-				<button type="button" class="btn-icon delete" title="Cancelar" data-id="${reserva.id_reserva}">
-					<i class="fa fa-trash"></i>
-				</button>
-			</td>
-		`;
-		tablaBody.appendChild(fila);
-	});
+    const texto = buscador.value.trim().toLowerCase();
+    const clase = filtroClase.value.toLowerCase();
+    const estado = filtroEstado.value.toLowerCase();
+
+    const listaFiltrada = reservas.filter(function (reserva) {
+        const cliente = String(reserva.cliente || '').toLowerCase();
+        const nombreClase = String(reserva.clase || '').toLowerCase();
+        const estadoReserva = String(reserva.estado || '').toLowerCase();
+
+        const coincideTexto = cliente.includes(texto) || nombreClase.includes(texto);
+        const coincideClase = clase === '' || nombreClase === clase;
+        const coincideEstado = estado === '' || estadoReserva === estado;
+
+        return coincideTexto && coincideClase && coincideEstado;
+    });
+
+    estadoVacio.textContent = reservas.length === 0
+        ? 'No hay reservas registradas.'
+        : 'No hay reservas que coincidan con los filtros.';
+
+    estadoVacio.style.display = listaFiltrada.length === 0 ? 'block' : 'none';
+
+    listaFiltrada.forEach(function (reserva) {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${reserva.id_reserva}</td>
+            <td>${reserva.cliente}</td>
+            <td>${reserva.clase}</td>
+            <td>${reserva.horario}</td>
+            <td>${reserva.fecha}</td>
+            <td>
+                <span class="badge-estado ${claseBadge(reserva.estado)}">${reserva.estado}</span>
+            </td>
+            <td class="acciones-reserva" ${esAdmin ? '' : 'hidden'}>
+                <button type="button" class="btn-icon edit" title="Cambiar estado" data-id="${reserva.id_reserva}">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" class="btn-icon delete" title="Cancelar" data-id="${reserva.id_reserva}">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </td>
+        `;
+        tablaBody.appendChild(fila);
+    });
 }
 
 function renderSolicitudes(filtro = '') {
@@ -252,6 +272,10 @@ formReserva.addEventListener('submit', async function (event) {
 
 buscador.addEventListener('input', function () { renderTabla(this.value); });
 buscadorSolicitudes.addEventListener('input', function () { renderSolicitudes(this.value); });
+[filtroClase, filtroEstado].forEach(function (campo) {
+	campo.addEventListener('change', renderTabla);
+});
+
 
 tablaSolicitudesBody.addEventListener('click', async function (event) {
 	const boton = event.target.closest('[data-id]');
@@ -287,4 +311,4 @@ cargarUsuario()
 	.then(cargarClaseSeleccionada)
 	.catch(function (error) {
 		alert(error.message);
-	});
+});

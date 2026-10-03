@@ -478,12 +478,8 @@ iframe {
   background: #333333;
 }
 
-
-
 /*------------------------------------------------------------------
 [ Responsive ]*/
-
-
 
 @media (max-width: 992px) {
   .wrap-login100 {
@@ -1960,4 +1956,48 @@ table.table-reservas tbody td {
 			opacity: 1;
 			visibility: visible;
 		}
-	
+
+.filtro-select {
+  padding: 12px 20px;
+  border: 1px solid #eee;
+  border-radius: 25px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+}
+
+select.filtro-select {
+  padding-right: 40px;
+}
+
+.filtro-select:focus {
+  border-color: #c850c0;
+  background-color: #fff;
+  outline: none;
+}
+
+.filtros-toolbar {
+  margin-top: -10px;
+}
+
+.cuadrado {
+  width: 28px;
+  height: 28px;
+  background-color: #919191;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 8px;
+  user-select: none; 
+  transition: background 0.2s;
+}
+
+.cuadrado:hover {
+  background-color: #2980b9;
+}

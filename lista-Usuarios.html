@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-	
+
 <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="images/fitlifefavicon.png">
@@ -11,8 +11,8 @@
 	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-
 </head>
+
 <body>
 
 	<header class="site-header">
@@ -46,7 +46,7 @@
 		</div>
 	</header>
 
-<main class="admin-wrapper">
+	<main class="admin-wrapper">
 		<div class="admin-content">
 			<div class="admin-panel active">
 				<span class="admin-title">Usuarios registrados</span>
@@ -56,7 +56,26 @@
 						<i class="fa fa-search"></i>
 						<input type="text" id="buscadorUsuarios" class="search-input" placeholder="Buscar por nombre, RUT o usuario...">
 					</div>
-				</div>
+
+					<label class="filtro-label">
+						Desde:
+						<input type="date" id="filtroFecha" class="filtro-select">
+					</label>
+					<label class="filtro-label">
+						Hasta:
+						<input type="date" id="filtroFechaHasta" class="filtro-select">
+					</label>
+
+					<button type="button" id="btnLimpiarFiltros" class="btn-admin-outline">
+						Limpiar
+					</button>
+					
+					</div>
+
+					<tr>Total de registros:</tr>
+					<label class="cuadrado" id="contadorRegistros">
+						<span id="contador">0</span>
+					</label>					
 
 				<div class="table-responsive">
 					<table class="table table-bordered table-reservas">
@@ -117,6 +136,7 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
 	<script src="js/site-header.js?v=3"></script>
-	<script src="js/lista.js"></script>
+	<script src="js/lista.js?v=3"></script>
 </body>
+
 </html>

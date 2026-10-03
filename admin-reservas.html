@@ -102,6 +102,23 @@
 					</button>
 				</div>
 
+				<div class="admin-toolbar filtros-toolbar">
+					<select id="filtroClase" class="filtro-select" aria-label="Filtrar por clase">
+						<option value="">Todas las clases</option>
+						<option value="Zumba">Zumba</option>
+						<option value="Spinning">Spinning</option>
+						<option value="Yoga">Yoga</option>
+						<option value="Funcional">Funcional</option>
+						<option value="Pilates">Pilates</option>
+					</select>
+					<select id="filtroEstado" class="filtro-select" aria-label="Filtrar por estado">
+						<option value="">Todos los estados</option>
+						<option value="Confirmada">Confirmada</option>
+						<option value="Pendiente">Pendiente</option>
+						<option value="Cancelada">Cancelada</option>
+					</select>
+				</div>
+
 				<div class="table-responsive">
 					<table class="table table-bordered table-reservas">
 						<thead>
@@ -250,7 +267,7 @@
 	<script src="vendor/select2/select2.min.js"></script>
 
 	<script src="js/site-header.js?v=3"></script>
-	<script src="js/admin-reservas.js?v=3"></script>
+	<script src="js/admin-reservas.js?v=4"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

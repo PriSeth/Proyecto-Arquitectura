@@ -1,41 +1,55 @@
 const tablaUsuariosBody = document.getElementById('tablaUsuariosBody');
 const estadoVacioUsuarios = document.getElementById('estadoVacioUsuarios');
 const buscadorUsuarios = document.getElementById('buscadorUsuarios');
+const filtroFecha = document.getElementById('filtroFecha');
+const filtroFechaHasta = document.getElementById('filtroFechaHasta');
+const btnLimpiarFiltros = document.getElementById('btnLimpiarFiltros');
+const contador = document.getElementById('contador');
 
 let usuarios = [];
 
-function formatearFecha(fechaTexto){
-    const fecha = new Date(fechaTexto.replace(' ', 'T'));
+function formatearFecha(fechaTexto) {
+    const fecha = new Date(String(fechaTexto).replace(' ', 'T'));
     if (isNaN(fecha)) return fechaTexto;
     return fecha.toLocaleDateString('es-CL');
 }
 
-function renderUsuarios(filtro = ''){
+function renderUsuarios() {
     tablaUsuariosBody.innerHTML = '';
-    const filtroLower = filtro.trim().toLocaleLowerCase();
+    const texto = buscadorUsuarios.value.trim().toLowerCase();
+    const desde = filtroFecha.value;
+    const hasta = filtroFechaHasta.value;
 
-    const listaFiltrada = usuarios.filter(function (u){
-       return u.nombre.toLowerCase().includes(filtroLower) ||
-			u.rut.toLowerCase().includes(filtroLower) ||
-			u.usuario.toLowerCase().includes(filtroLower);
-	});
+    const listaFiltrada = usuarios.filter(function (u) {
+        const fechaReg = String(u.fecha_registro || '').slice(0, 10);
+
+        const coincideTexto = u.nombre.toLowerCase().includes(texto) ||
+            u.rut.toLowerCase().includes(texto) ||
+            u.usuario.toLowerCase().includes(texto);
+        const coincideDesde = !desde || fechaReg >= desde;
+        const coincideHasta = !hasta || fechaReg <= hasta;
+
+        return coincideTexto && coincideDesde && coincideHasta;
+    });
+
+    contador.textContent = usuarios.length;
 
     estadoVacioUsuarios.style.display = listaFiltrada.length === 0 ? 'block' : 'none';
 
-    listaFiltrada.forEach(function (u){
+    listaFiltrada.forEach(function (u) {
         const fila = document.createElement('tr');
         fila.innerHTML = `
-			<td>${u.id_usuario}</td>
-			<td>${u.nombre}</td>
-			<td>${u.rut}</td>
-			<td>${u.correo}</td>
-			<td>${u.usuario}</td>
-			<td>${u.telefono}</td>
-			<td><span class="badge-estado ${u.rol === 'admin' ? 'badge-confirmada' : 'badge-pendiente'}">${u.rol}</span></td>
-			<td>${formatearFecha(u.fecha_registro)}</td>
-		`;
-		tablaUsuariosBody.appendChild(fila);
-	});
+            <td>${u.id_usuario}</td>
+            <td>${u.nombre}</td>
+            <td>${u.rut}</td>
+            <td>${u.correo}</td>
+            <td>${u.usuario}</td>
+            <td>${u.telefono}</td>
+            <td><span class="badge-estado ${u.rol === 'admin' ? 'badge-confirmada' : 'badge-pendiente'}">${u.rol}</span></td>
+            <td>${formatearFecha(u.fecha_registro)}</td>
+        `;
+        tablaUsuariosBody.appendChild(fila);
+    });
 }
 
 async function cargarUsuarios() {
@@ -49,13 +63,22 @@ async function cargarUsuarios() {
         throw new Error(resultado.mensaje || 'No se pudieron cargar los usuarios.');
     }
     usuarios = resultado.usuarios;
-    renderUsuarios(buscadorUsuarios.value);
+    renderUsuarios();
 }
 
-buscadorUsuarios.addEventListener('input', function (){
-    renderUsuarios(this.value);
+buscadorUsuarios.addEventListener('input', renderUsuarios);
+
+[filtroFecha, filtroFechaHasta].forEach(function (campo) {
+    campo.addEventListener('change', renderUsuarios);
+});
+
+btnLimpiarFiltros.addEventListener('click', function () {
+    buscadorUsuarios.value = '';
+    filtroFecha.value = '';
+    filtroFechaHasta.value = '';
+    renderUsuarios();
 });
 
 cargarUsuarios().catch(function (error) {
-	alert(error.message);
+    alert(error.message);
 });
