@@ -268,10 +268,11 @@
 		function validarCampo(campo) {
 			const contenedor = campo.closest('.wrap-input100');
 
-			if (campo === campoCodigo && campo.disabled) {
-				contenedor.classList.remove('confirm-validate');
-				contenedor.classList.add('alert-validate');
-				return false;
+			if (campo === campoCodigo) {
+				const codigoVerificado = window.correoVerificado === true;
+				contenedor.classList.toggle('confirm-validate', codigoVerificado);
+				contenedor.classList.toggle('alert-validate', !codigoVerificado);
+				return codigoVerificado;
 			}
 
 			if (campo === campoRut) {

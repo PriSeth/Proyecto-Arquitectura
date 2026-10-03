@@ -2,6 +2,11 @@ const buscarRut = document.getElementById('buscarRut');
 const botonesGestion = document.getElementById('botonesGestion');
 const btnModificar = document.getElementById('btnModificar');
 const btnEliminar = document.getElementById('btnEliminar');
+const confirmarEliminar = document.getElementById('confirmarEliminar');
+const btnConfirmarEliminar = document.getElementById('btnConfirmarEliminar');
+const btnCancelarEliminar = document.getElementById('btnCancelarEliminar');
+const eliminacionExitosa = document.getElementById('eliminacionExitosa');
+const btnCerrarEliminacionExitosa = document.getElementById('btnCerrarEliminacionExitosa');
 const btnCancelarCambios = document.getElementById('btnCancelarCambios');
 const seccionCampos = document.getElementById('seccionCampos');
 
@@ -203,12 +208,51 @@ btnCancelarCambios.addEventListener('click', function () {
 
 btnEliminar.addEventListener('click', async function () {
 	btnModificar.hidden = true;
+	confirmarEliminar.hidden = false;
+	btnCancelarEliminar.focus();
+});
 
-	if (!confirm('¿Eliminar definitivamente a "' + campoNombre.value + '"? Esta acción no se puede deshacer.')) {
-		btnModificar.hidden = false;
-		return;
+function cancelarEliminacion() {
+	btnModificar.hidden = false;
+	btnEliminar.focus();
+}
+
+btnCancelarEliminar.addEventListener('click', function () {
+	confirmarEliminar.hidden = true;
+	cancelarEliminacion();
+});
+
+confirmarEliminar.addEventListener('click', function (event) {
+	if (event.target === confirmarEliminar) {
+		confirmarEliminar.hidden = true;
+		cancelarEliminacion();
 	}
+});
 
+document.addEventListener('keydown', function (event) {
+	if (event.key === 'Escape' && !confirmarEliminar.hidden) {
+		confirmarEliminar.hidden = true;
+		cancelarEliminacion();
+	} else if (event.key === 'Escape' && !eliminacionExitosa.hidden) {
+		cerrarAvisoEliminacion();
+	}
+});
+
+function cerrarAvisoEliminacion() {
+	eliminacionExitosa.hidden = true;
+	buscarRut.focus();
+}
+
+btnCerrarEliminacionExitosa.addEventListener('click', cerrarAvisoEliminacion);
+
+eliminacionExitosa.addEventListener('click', function (event) {
+	if (event.target === eliminacionExitosa) {
+		cerrarAvisoEliminacion();
+	}
+});
+
+btnConfirmarEliminar.addEventListener('click', async function () {
+	confirmarEliminar.hidden = true;
 	try {
 		const respuesta = await fetch('php/usuarios.php', {
 			method: 'DELETE',
@@ -219,10 +263,11 @@ btnEliminar.addEventListener('click', async function () {
 		if (!respuesta.ok || !resultado.ok) {
 			throw new Error(resultado.mensaje || 'No se pudo eliminar el usuario.');
 		}
-		alert('Usuario eliminado correctamente.');
 		buscarRut.value = '';
 		limpiarFormulario();
 		estadoInicial();
+		eliminacionExitosa.hidden = false;
+		btnCerrarEliminacionExitosa.focus();
 	} catch (error) {
 		alert(error.message);
 		btnModificar.hidden = false;

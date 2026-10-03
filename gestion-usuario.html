@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
     <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
     <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css?v=2">
 </head>
 
 <body>
@@ -139,6 +139,35 @@
             </div>
         </section>
     </main>
+
+    <div class="delete-confirm-dialog" id="confirmarEliminar" role="dialog" aria-modal="true"
+        aria-labelledby="tituloConfirmarEliminar" aria-describedby="mensajeConfirmarEliminar" hidden>
+        <div class="delete-confirm-content">
+            <span class="delete-confirm-icon" aria-hidden="true">
+                <i class="fa fa-exclamation-triangle"></i>
+            </span>
+            <h2 id="tituloConfirmarEliminar">Confirmar eliminación</h2>
+            <p id="mensajeConfirmarEliminar">¿Está seguro de que desea eliminar este usuario?</p>
+            <div class="delete-confirm-actions">
+                <button type="button" class="delete-confirm-yes" id="btnConfirmarEliminar">SI</button>
+                <button type="button" class="delete-confirm-no" id="btnCancelarEliminar">NO</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-confirm-dialog" id="eliminacionExitosa" role="dialog" aria-modal="true"
+        aria-labelledby="tituloEliminacionExitosa" aria-describedby="mensajeEliminacionExitosa" hidden>
+        <div class="delete-confirm-content">
+            <span class="delete-confirm-icon success-icon" aria-hidden="true">
+                <i class="fa fa-check"></i>
+            </span>
+            <h2 id="tituloEliminacionExitosa">Eliminación completada</h2>
+            <p id="mensajeEliminacionExitosa">El usuario se eliminó correctamente.</p>
+            <div class="delete-confirm-actions">
+                <button type="button" class="delete-confirm-no" id="btnCerrarEliminacionExitosa">Aceptar</button>
+            </div>
+        </div>
+    </div>
     
     <footer class="project-footer">
         <div class="footer-credit">
@@ -174,7 +203,7 @@
     <script src="vendor/bootstrap/js/popper.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/site-header.js?v=3"></script>
-    <script src="js/gestion.js"></script>
+    <script src="js/gestion.js?v=3"></script>
 </body>
 
 </html>
